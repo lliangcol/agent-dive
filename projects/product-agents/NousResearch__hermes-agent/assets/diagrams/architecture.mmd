@@ -1,0 +1,29 @@
+flowchart TB
+  %% Basis: README and official architecture page, not yet source-verified locally.
+  U["User"]
+  CLI["CLI<br/>cli.py / hermes_cli"]
+  GW["Messaging Gateway<br/>gateway"]
+  ACP["ACP / IDE Adapter<br/>acp_adapter"]
+  CRON["Cron Scheduler<br/>cron"]
+  BATCH["Batch Runner<br/>batch_runner.py"]
+  AGENT["AIAgent<br/>run_agent.py"]
+  PROMPT["Prompt Builder<br/>agent/prompt_builder.py"]
+  PROVIDER["Provider Runtime Resolution<br/>hermes_cli/runtime_provider.py"]
+  TOOLS["Tool Dispatch<br/>model_tools.py"]
+  REG["Tool Registry<br/>tools/registry.py"]
+  STATE["Session Storage<br/>SQLite + FTS5"]
+  BACKENDS["Tool Backends<br/>terminal / browser / web / MCP / file / vision"]
+
+  U --> CLI
+  U --> GW
+  CLI --> AGENT
+  GW --> AGENT
+  ACP --> AGENT
+  CRON --> AGENT
+  BATCH --> AGENT
+  AGENT --> PROMPT
+  AGENT --> PROVIDER
+  AGENT --> TOOLS
+  TOOLS --> REG
+  REG --> BACKENDS
+  AGENT --> STATE

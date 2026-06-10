@@ -1,0 +1,14 @@
+flowchart TD
+  Start["Start: collect target project folder"] --> Install["Install graphifyy and register assistant skill"]
+  Install --> Run["Run graphify . or assistant command"]
+  Run --> Scan["Scan files and apply ignore/cache rules"]
+  Scan --> Static["Extract deterministic code structure"]
+  Scan --> Semantic["Extract semantic concepts from non-code materials"]
+  Static --> Build["Build graph nodes and edges"]
+  Semantic --> Build
+  Build --> Write["Write graphify-out artifacts"]
+  Write --> Query["Assistant queries graph instead of broad file reads"]
+  Query --> Answer["Answer with smaller, traceable context"]
+
+  Warning["Unverified in this collection:\nactual CLI flags, cache behavior, error handling, and semantic extraction boundaries."] -.-> Run
+

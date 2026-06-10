@@ -1,0 +1,16 @@
+%% 依据：src/index.ts、src/stdin.ts、src/transcript.ts、src/render/index.ts；真实 stdin payload 待采样验证。
+sequenceDiagram
+  participant CC as Claude Code
+  participant Cmd as statusLine.command
+  participant Main as src/index.ts
+  participant Transcript as src/transcript.ts
+  participant Render as src/render
+
+  CC->>Cmd: invoke with stdin JSON
+  Cmd->>Main: run dist/index.js
+  Main->>Main: readStdin()
+  Main->>Transcript: parseTranscript(transcript_path)
+  Transcript-->>Main: tools, agents, todos, session tokens
+  Main->>Main: load config, git, usage, memory, version
+  Main->>Render: render(RenderContext)
+  Render-->>CC: stdout HUD lines

@@ -1,0 +1,24 @@
+{
+  "project_id": "affaan-m__ECC",
+  "project_name": "ECC",
+  "github_url": "https://github.com/affaan-m/ECC",
+  "status": "not_started",
+  "current_stage": "analyzing",
+  "completed_tasks": 0,
+  "total_tasks": 43,
+  "last_studied_at": "2026-06-11",
+  "blocked_items": [
+    "Local ECC CLI and npm commands are not verified",
+    "Codex plugin and MCP loading are not verified",
+    "Claude/OpenCode hook execution is not verified",
+    "Full source-level call chains are not verified"
+  ],
+  "next_actions": [
+    "Run read-only ECC plan command with explicit npm package selector",
+    "Trace scripts/ecc.js, install-plan.js, install-apply.js, and hooks/hooks.json",
+    "Record dry-run write scope in evidence.md"
+  ],
+  "evidence_file": "projects/agentic-coding/affaan-m__ECC/evidence.md",
+  "review_questions_done": false,
+  "final_summary_done": false
+}

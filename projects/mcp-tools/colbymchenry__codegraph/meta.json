@@ -1,0 +1,56 @@
+{
+  "project_id": "colbymchenry__codegraph",
+  "name": "CodeGraph",
+  "github_url": "https://github.com/colbymchenry/codegraph",
+  "homepage": "https://colbymchenry.github.io/codegraph/",
+  "category": "mcp-tools",
+  "collect_level": "Level A",
+  "status": "analyzing",
+  "license": "MIT",
+  "primary_language": "TypeScript",
+  "default_branch": "main",
+  "collected_at": "2026-06-10",
+  "github_snapshot": {
+    "stars": 46626,
+    "forks": 2855,
+    "open_issues_count": 217,
+    "pushed_at": null,
+    "source": "GitHub API and collect-report.md"
+  },
+  "source_snapshot": {
+    "commit": "16c73e2b0e027411e22039baeb32fbe60ab42b4c",
+    "snapshot_date": "2026-06-11",
+    "source_cache_path": ".cache/sources/colbymchenry__codegraph",
+    "source_status": "cache_clone_checked"
+  },
+  "verification": {
+    "runtime_status": "pass",
+    "tests_status": "partial",
+    "source_review_status": "partial",
+    "diagram_status": "draft",
+    "learning_notes_status": "created"
+  },
+  "evidence": {
+    "evidence_file": "projects/mcp-tools/colbymchenry__codegraph/evidence.md",
+    "last_verified_at": "2026-06-11"
+  },
+  "tags": [
+    "mcp",
+    "code-knowledge-graph",
+    "tree-sitter",
+    "sqlite",
+    "fts5",
+    "agent-tooling",
+    "impact-analysis"
+  ],
+  "suitable_for": [
+    "MCP code search and context retrieval study",
+    "static code graph indexing architecture study",
+    "Agent tool guidance comparison"
+  ],
+  "not_suitable_for": [
+    "claiming benchmark results without local reproduction",
+    "using MCP source snippets without permission review"
+  ],
+  "maintainer_notes": "First-pass AgentDive collection plus isolated cache validation. The repository was cloned to .cache/sources/colbymchenry__codegraph at the analyzed commit. npm ci, build, CLI version/help, init -i, status, query, callers, impact, MCP initialize/tools-list, and one focused vitest file passed. Full test suite and MCP tools/call behavior are still pending. This remains the default gold-sample candidate, but is not study-ready yet."
+}

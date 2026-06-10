@@ -1,0 +1,58 @@
+{
+  "project_id": "safishamsi__graphify",
+  "name": "Graphify",
+  "github_url": "https://github.com/safishamsi/graphify",
+  "homepage": "https://graphifylabs.ai/",
+  "category": "agentic-coding",
+  "collect_level": "Level B",
+  "status": "analyzing",
+  "license": "MIT",
+  "primary_language": "Python",
+  "default_branch": "v8",
+  "collected_at": "2026-06-10",
+  "github_snapshot": {
+    "stars": 64743,
+    "forks": 6578,
+    "open_issues_count": 328,
+    "pushed_at": "2026-06-10T14:50:55Z",
+    "source": "GitHub API refresh on 2026-06-11"
+  },
+  "source_snapshot": {
+    "commit": "5504c84324fc9249eb4c9d0cca86da7140250032",
+    "snapshot_date": "2026-06-10",
+    "source_cache_path": ".cache/sources/safishamsi__graphify",
+    "source_status": "metadata_and_readme_checked"
+  },
+  "verification": {
+    "runtime_status": "not_run",
+    "tests_status": "not_run",
+    "source_review_status": "partial",
+    "diagram_status": "draft",
+    "learning_notes_status": "created"
+  },
+  "evidence": {
+    "evidence_file": "projects/agentic-coding/safishamsi__graphify/evidence.md",
+    "last_verified_at": null
+  },
+  "tags": [
+    "agentic-coding",
+    "knowledge-graph",
+    "context-engineering",
+    "rag",
+    "mcp",
+    "tree-sitter",
+    "skills",
+    "codex",
+    "claude-code"
+  ],
+  "suitable_for": [
+    "codebase knowledge graph learning",
+    "AI coding assistant context retrieval study",
+    "MCP and assistant skill integration study"
+  ],
+  "not_suitable_for": [
+    "treating graph answers as source-of-truth without verification",
+    "running semantic extraction on sensitive material before reviewing data boundaries"
+  ],
+  "maintainer_notes": "First-pass AgentDive collection. GitHub metadata and README were checked. Local execution, full source call-chain verification, and Codex install write scope are pending."
+}

@@ -1,0 +1,23 @@
+flowchart LR
+  %% Basis: README, tools docs, architecture page. Skill internals pending source verification.
+  MODEL["Model tool call"]
+  DISPATCH["model_tools.py"]
+  REG["tools/registry.py"]
+  TOOLSETS["toolsets.py<br/>platform presets"]
+  BUILTIN["Built-in tools"]
+  MCP["MCP tools"]
+  SKILLS["Skills<br/>built-in / optional / user"]
+  RESULT["Tool or skill result"]
+  AGENT["AIAgent loop"]
+
+  AGENT --> MODEL
+  MODEL --> DISPATCH
+  DISPATCH --> REG
+  TOOLSETS --> REG
+  REG --> BUILTIN
+  REG --> MCP
+  AGENT --> SKILLS
+  BUILTIN --> RESULT
+  MCP --> RESULT
+  SKILLS --> RESULT
+  RESULT --> AGENT

@@ -1,0 +1,18 @@
+sequenceDiagram
+    participant Agent as AI coding agent
+    participant Hook as Agent hook or plugin
+    participant Rewrite as rtk rewrite
+    participant Perm as permissions
+    participant Registry as discover registry
+    participant Shell as Shell
+
+    Agent->>Hook: Bash command JSON
+    Hook->>Rewrite: rtk rewrite "git status"
+    Rewrite->>Perm: check host rules
+    Perm-->>Rewrite: Deny, Ask, Allow, or Default
+    Rewrite->>Registry: rewrite_command("git status")
+    Registry-->>Rewrite: "rtk git status"
+    Rewrite-->>Hook: stdout plus exit code
+    Hook-->>Agent: updated command or passthrough
+    Agent->>Shell: execute command
+    Shell-->>Agent: filtered output if RTK was used

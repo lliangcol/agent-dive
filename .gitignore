@@ -1,0 +1,51 @@
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# 本地环境与密钥
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# 依赖与构建产物
+node_modules/
+dist/
+build/
+target/
+out/
+.next/
+.nuxt/
+.vite/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.venv/
+venv/
+
+# 日志与临时文件
+*.log
+logs/
+tmp/
+temp/
+
+# AgentDive 本地缓存
+.cache/
+.local/
+.runs/
+
+# 第三方源码缓存
+.cache/sources/
+.cache/runs/

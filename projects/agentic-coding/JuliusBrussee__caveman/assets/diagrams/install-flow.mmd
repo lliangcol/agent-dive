@@ -1,0 +1,17 @@
+flowchart TD
+  Start["Start: user runs one-liner, npx, or node bin/install.js"] --> Args["Parse flags\n--all, --only, --dry-run, --minimal, --uninstall"]
+  Args --> Detect["Detect supported agents\nor use explicit --only"]
+  Detect --> Plan["Build install plan"]
+  Plan --> DryRun{"--dry-run?"}
+  DryRun -->|Yes| Print["Print commands and paths\nno intended writes"]
+  DryRun -->|No| Execute["Run per-agent install paths"]
+  Execute --> Skills["Install skills / plugins / extensions"]
+  Execute --> Hooks["Optional Claude hooks + statusline"]
+  Execute --> MCP["Optional caveman-shrink registration"]
+  Execute --> Rules["Optional repo rule files via --with-init"]
+  Skills --> Done["Agent can trigger /caveman or auto activation if supported"]
+  Hooks --> Done
+  MCP --> Done
+  Rules --> Done
+
+  Warning["Unverified in this collection:\nactual provider detection, write scope, idempotency, and uninstall behavior."] -.-> Execute

@@ -1,0 +1,23 @@
+{
+  "project_id": "colbymchenry__codegraph",
+  "project_name": "CodeGraph",
+  "github_url": "https://github.com/colbymchenry/codegraph",
+  "status": "in_progress",
+  "current_stage": "analyzing",
+  "completed_tasks": 15,
+  "total_tasks": 33,
+  "last_studied_at": "2026-06-11",
+  "blocked_items": [
+    "Full CodeGraph test suite is not run",
+    "npm audit reported 8 dependency vulnerabilities after npm ci --ignore-scripts",
+    "MCP tools/call behavior is not sampled; initialize and tools/list are verified"
+  ],
+  "next_actions": [
+    "Decide whether the full test suite or a focused subset is required for study-ready",
+    "Review npm audit findings without auto-fixing dependencies",
+    "Continue Level 3 source reading: findRelevantContext, buildContext ranking/budget strategy, and one extractor/resolver"
+  ],
+  "evidence_file": "projects/mcp-tools/colbymchenry__codegraph/evidence.md",
+  "review_questions_done": false,
+  "final_summary_done": false
+}

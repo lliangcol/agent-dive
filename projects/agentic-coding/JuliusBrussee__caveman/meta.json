@@ -1,0 +1,60 @@
+{
+  "project_id": "JuliusBrussee__caveman",
+  "name": "Caveman",
+  "github_url": "https://github.com/JuliusBrussee/caveman",
+  "homepage": "https://getcaveman.dev/",
+  "category": "agentic-coding",
+  "collect_level": "Level B",
+  "status": "analyzing",
+  "license": "MIT",
+  "primary_language": "JavaScript",
+  "default_branch": "main",
+  "collected_at": "2026-06-11",
+  "github_snapshot": {
+    "stars": 70960,
+    "forks": 3987,
+    "open_issues_count": 282,
+    "pushed_at": null,
+    "source": "GitHub API snapshot and collection notes"
+  },
+  "source_snapshot": {
+    "commit": "655b7d9c5431f822264b7732e9901c5578ac84cf",
+    "snapshot_date": "2026-06-11",
+    "source_cache_path": ".cache/sources/JuliusBrussee__caveman",
+    "source_status": "selected_docs_checked"
+  },
+  "verification": {
+    "runtime_status": "not_run",
+    "tests_status": "not_run",
+    "source_review_status": "partial",
+    "diagram_status": "draft",
+    "learning_notes_status": "created"
+  },
+  "evidence": {
+    "evidence_file": "projects/agentic-coding/JuliusBrussee__caveman/evidence.md",
+    "last_verified_at": null
+  },
+  "tags": [
+    "agentic-coding",
+    "prompt-engineering",
+    "skills",
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "mcp",
+    "token-optimization",
+    "hooks",
+    "subagents"
+  ],
+  "suitable_for": [
+    "response compression workflow study",
+    "multi-agent skill distribution reference",
+    "MCP tool-description compression review"
+  ],
+  "not_suitable_for": [
+    "treating compression as correctness improvement",
+    "installing user-level configs without dry-run",
+    "compressing sensitive memory files without reviewing backups"
+  ],
+  "maintainer_notes": "First-pass AgentDive collection. GitHub metadata, README, install docs, hook docs, MCP shrink docs, and security notes were checked. Local installation, tests, benchmarks, and source call-chain validation are pending."
+}

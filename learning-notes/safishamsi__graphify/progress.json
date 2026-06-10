@@ -1,0 +1,23 @@
+{
+  "project_id": "safishamsi__graphify",
+  "project_name": "Graphify",
+  "github_url": "https://github.com/safishamsi/graphify",
+  "status": "not_started",
+  "current_stage": "analyzing",
+  "completed_tasks": 0,
+  "total_tasks": 36,
+  "last_studied_at": "2026-06-10",
+  "blocked_items": [
+    "Local graphify CLI run is not verified",
+    "Source-level call chains are not verified",
+    "Codex project install write scope is not verified"
+  ],
+  "next_actions": [
+    "Read architecture and security docs",
+    "Run graphify on a small public repository",
+    "Trace CLI and MCP server entrypoints"
+  ],
+  "evidence_file": "projects/agentic-coding/safishamsi__graphify/evidence.md",
+  "review_questions_done": false,
+  "final_summary_done": false
+}

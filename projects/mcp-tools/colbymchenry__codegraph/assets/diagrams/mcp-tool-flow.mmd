@@ -1,0 +1,21 @@
+flowchart TD
+  Q["Agent question or edit task"] --> T{"Tool intent"}
+  T -->|Understand area| Explore["codegraph_explore"]
+  T -->|Find symbol| Search["codegraph_search"]
+  T -->|Who calls it| Callers["codegraph_callers"]
+  T -->|What it calls| Callees["codegraph_callees"]
+  T -->|Change impact| Impact["codegraph_impact"]
+  T -->|Read indexed file or symbol| Node["codegraph_node"]
+  T -->|Index health| Status["codegraph_status"]
+  Explore --> H["ToolHandler validates input and output budget"]
+  Search --> H
+  Callers --> H
+  Callees --> H
+  Impact --> H
+  Node --> H
+  Status --> H
+  H --> CG["CodeGraph instance"]
+  CG --> DB["SQLite graph"]
+  DB --> R["Markdown or JSON result"]
+  R --> S["Staleness and worktree notices when needed"]
+  S --> A["Agent answer or edit plan"]

@@ -1,0 +1,12 @@
+flowchart TD
+  A["Project source files"] --> B["Scan files and apply ignore rules"]
+  B --> C["Detect language by extension"]
+  C --> D["Load tree-sitter grammar or special extractor"]
+  D --> E["Parse AST and extract nodes"]
+  E --> F["Store nodes, files, unresolved refs"]
+  F --> G["Resolve imports, names, frameworks, callbacks"]
+  G --> H["Persist graph edges"]
+  H --> I["Update metadata and SQLite FTS"]
+  I --> J["Query through CLI or MCP tools"]
+  K["File watcher"] --> L["Debounced sync"]
+  L --> B

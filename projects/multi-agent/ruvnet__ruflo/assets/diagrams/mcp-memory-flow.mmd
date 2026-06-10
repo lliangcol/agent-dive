@@ -1,0 +1,19 @@
+sequenceDiagram
+  participant Client as MCP Client
+  participant CLI as ruflo / cli.js
+  participant Tools as mcp-tools registry
+  participant Swarm as SwarmCoordinator
+  participant Agent as Agent
+  participant Memory as HybridBackend
+  participant DB as SQLite / AgentDB
+
+  Client->>CLI: JSON-RPC tool call
+  CLI->>Tools: callMCPTool(name, params)
+  Tools->>Swarm: spawn or execute task
+  Swarm->>Agent: executeTask(task)
+  Agent-->>Swarm: TaskResult
+  Swarm->>Memory: store event/result
+  Memory->>DB: structured and vector writes
+  Swarm-->>Tools: result and metrics
+  Tools-->>CLI: MCP tool result
+  CLI-->>Client: JSON-RPC response

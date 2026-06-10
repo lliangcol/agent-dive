@@ -1,0 +1,16 @@
+flowchart LR
+  User["User / AI coding assistant"] --> CLI["graphify CLI"]
+  CLI --> Scanner["File scanner and cache"]
+  Scanner --> CodeExtract["Code structure extraction\nTree-sitter, imports, calls"]
+  Scanner --> SemanticExtract["Semantic extraction\nDocs, papers, images, transcripts"]
+  CodeExtract --> Graph["Knowledge graph"]
+  SemanticExtract --> Graph
+  Graph --> Html["graph.html"]
+  Graph --> Report["GRAPH_REPORT.md"]
+  Graph --> Json["graph.json"]
+  Graph --> MCP["graphify-mcp\noptional"]
+  Graph --> Exporters["Optional exports\nNeo4j, GraphML, SVG"]
+  MCP --> Assistant["Assistant query workflow"]
+
+  Note["Basis: README, pyproject summary, GitHub docs snippets.\nSource-level module boundaries are pending verification."] -.-> Graph
+

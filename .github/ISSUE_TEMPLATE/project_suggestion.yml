@@ -1,0 +1,42 @@
+name: 建议收录项目
+description: 推荐一个值得 AgentDive 精读的 AI Agent 开源项目。
+title: "[Project]: "
+labels:
+  - project-suggestion
+body:
+  - type: input
+    id: github_url
+    attributes:
+      label: GitHub 地址
+      placeholder: https://github.com/owner/repo
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: 建议分类
+      options:
+        - agent-frameworks
+        - agentic-coding
+        - mcp-tools
+        - multi-agent
+        - product-agents
+        - rag-agents
+        - evaluation-observability
+        - other
+    validations:
+      required: true
+  - type: textarea
+    id: reason
+    attributes:
+      label: 推荐理由
+      description: 说明该项目的学习价值、独特机制或工程代表性。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 初步证据
+      description: README、文档、源码目录、运行截图或相关文章链接。
+    validations:
+      required: false

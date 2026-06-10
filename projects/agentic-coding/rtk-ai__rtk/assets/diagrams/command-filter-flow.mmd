@@ -1,0 +1,13 @@
+flowchart LR
+    Rtk["rtk git diff"] --> Parse["Clap parse in src/main.rs"]
+    Parse --> Route["Commands::Git route"]
+    Route --> Module["src/cmds/git/git.rs"]
+    Module --> Native["Run native git diff"]
+    Native --> Raw["Raw stdout and stderr"]
+    Raw --> Strategy["Command-specific filter"]
+    Strategy --> Compact["Stat, grouped changes, truncation"]
+    Compact --> Print["Print compact output"]
+    Compact --> Track["TimedExecution::track"]
+    Raw --> Failure{"Failure and large raw output?"}
+    Failure -->|yes| Tee["tee raw output and show hint"]
+    Failure -->|no| Done["No tee"]

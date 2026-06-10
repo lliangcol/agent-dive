@@ -1,0 +1,12 @@
+flowchart TB
+  Ruflo["Ruflo repository"] --> Claude["Claude Code plugin"]
+  Ruflo --> CLI["CLI full install"]
+  Ruflo --> Codex["Codex .agents config"]
+  Claude --> ClaudeMeta[".claude-plugin/plugin.json"]
+  Claude --> ClaudeHooks[".claude-plugin/hooks/hooks.json"]
+  ClaudeHooks --> Note1["POSIX file; commands use || true"]
+  CLI --> Settings["Generated settings and hooks"]
+  CLI --> MCP["MCP server registration"]
+  Codex --> AgentsToml[".agents/config.toml"]
+  Codex --> Skills[".agents/skills"]
+  Codex --> Note2["No .codex-plugin/plugin.json found at checked HEAD"]

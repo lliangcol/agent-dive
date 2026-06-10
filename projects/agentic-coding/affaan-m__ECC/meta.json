@@ -1,0 +1,60 @@
+{
+  "project_id": "affaan-m__ECC",
+  "name": "ECC",
+  "github_url": "https://github.com/affaan-m/ECC",
+  "homepage": "https://ecc.tools",
+  "category": "agentic-coding",
+  "collect_level": "Level A",
+  "status": "analyzing",
+  "license": "MIT",
+  "primary_language": "JavaScript",
+  "default_branch": "main",
+  "collected_at": "2026-06-11",
+  "github_snapshot": {
+    "stars": 212486,
+    "forks": 32632,
+    "open_issues_count": 60,
+    "pushed_at": "2026-06-10T03:57:03Z",
+    "source": "GitHub API snapshot and local collection notes"
+  },
+  "source_snapshot": {
+    "commit": "c888d2b73f26d605ff6c172b433d4cad2200206f",
+    "snapshot_date": "2026-06-11",
+    "source_cache_path": ".cache/sources/affaan-m__ECC",
+    "source_status": "selected_files_checked"
+  },
+  "verification": {
+    "runtime_status": "not_run",
+    "tests_status": "not_run",
+    "source_review_status": "partial",
+    "diagram_status": "draft",
+    "learning_notes_status": "created"
+  },
+  "evidence": {
+    "evidence_file": "projects/agentic-coding/affaan-m__ECC/evidence.md",
+    "last_verified_at": null
+  },
+  "tags": [
+    "agentic-coding",
+    "agent-harness",
+    "claude-code",
+    "codex",
+    "opencode",
+    "cursor",
+    "mcp",
+    "skills",
+    "hooks",
+    "security"
+  ],
+  "suitable_for": [
+    "cross-harness agent workflow study",
+    "hook lifecycle and safety gate analysis",
+    "Codex and Claude Code workflow comparison"
+  ],
+  "not_suitable_for": [
+    "blindly installing hooks into a sensitive workstation",
+    "treating README capability counts as local proof",
+    "copying global agent config without rollback"
+  ],
+  "maintainer_notes": "First-pass AgentDive collection. Metadata, README, package metadata, cross-harness docs, plugin manifests, hooks manifest, and selected scripts were checked. CLI execution and install behavior are pending."
+}

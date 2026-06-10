@@ -1,0 +1,60 @@
+{
+  "project_id": "jarrodwatts__claude-hud",
+  "name": "Claude HUD",
+  "github_url": "https://github.com/jarrodwatts/claude-hud",
+  "homepage": "https://github.com/jarrodwatts/claude-hud",
+  "category": "agentic-coding",
+  "collect_level": "Level B",
+  "status": "analyzing",
+  "license": "MIT",
+  "primary_language": "TypeScript",
+  "default_branch": "main",
+  "collected_at": "2026-06-11",
+  "github_snapshot": {
+    "stars": 24916,
+    "forks": 1129,
+    "open_issues_count": 3,
+    "pushed_at": null,
+    "source": "GitHub page, raw files, and shallow clone after API rate limit"
+  },
+  "source_snapshot": {
+    "commit": "9650a43600e9bcc94057fbd693a7f05aba4ee1ff",
+    "snapshot_date": "2026-06-11",
+    "source_cache_path": ".cache/sources/jarrodwatts__claude-hud",
+    "source_status": "shallow_snapshot_checked"
+  },
+  "verification": {
+    "runtime_status": "not_run",
+    "tests_status": "fail",
+    "source_review_status": "partial",
+    "diagram_status": "draft",
+    "learning_notes_status": "created"
+  },
+  "evidence": {
+    "evidence_file": "projects/agentic-coding/jarrodwatts__claude-hud/evidence.md",
+    "last_verified_at": null
+  },
+  "tags": [
+    "agentic-coding",
+    "claude-code",
+    "statusline",
+    "context-observability",
+    "usage-limits",
+    "transcript-jsonl",
+    "tool-activity",
+    "subagent-tracking",
+    "todo-progress",
+    "mcp-activity"
+  ],
+  "suitable_for": [
+    "Claude Code statusline workflow study",
+    "session observability and context usage display study",
+    "transcript JSONL parsing reference"
+  ],
+  "not_suitable_for": [
+    "treating HUD output as full tracing",
+    "assuming subscriber usage limits are available for API-key-only sessions",
+    "installing into a primary Claude Code profile before backup"
+  ],
+  "maintainer_notes": "First-pass AgentDive collection. GitHub page, raw README/package, plugin manifest, setup/configure commands, source files, and a shallow source snapshot were checked. npm ci succeeded, but npm test failed on Windows and needs rerun with captured logs."
+}

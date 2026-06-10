@@ -1,0 +1,23 @@
+{
+  "project_id": "NousResearch__hermes-agent",
+  "project_name": "Hermes Agent",
+  "github_url": "https://github.com/NousResearch/hermes-agent",
+  "status": "in_progress",
+  "current_stage": "analyzing",
+  "completed_tasks": 4,
+  "total_tasks": 36,
+  "last_studied_at": "2026-06-10",
+  "blocked_items": [
+    "Source is not cloned locally",
+    "Local install and hermes doctor are not verified",
+    "Provider, MCP, gateway, cron, and terminal backend behavior are not verified"
+  ],
+  "next_actions": [
+    "Clone source into .cache/sources/NousResearch__hermes-agent and pin commit",
+    "Run hermes doctor in an isolated environment",
+    "Verify AIAgent, tool registry, memory, gateway, MCP, and cron call chains"
+  ],
+  "evidence_file": "projects/product-agents/NousResearch__hermes-agent/evidence.md",
+  "review_questions_done": false,
+  "final_summary_done": false
+}

@@ -1,0 +1,21 @@
+sequenceDiagram
+  participant U as User
+  participant A as AI Assistant
+  participant G as Graphify CLI
+  participant P as Parsers and Extractors
+  participant O as graphify-out
+  participant M as MCP or Query Layer
+
+  U->>A: Ask codebase question or request /graphify
+  A->>G: Trigger graph build or query path
+  G->>P: Scan files and extract structure or semantics
+  P-->>G: Nodes, edges, concepts
+  G->>O: Write graph.html, GRAPH_REPORT.md, graph.json
+  A->>M: Query graph for relevant context
+  M->>O: Read graph artifacts
+  O-->>M: Relevant subgraph or report context
+  M-->>A: Compact evidence
+  A-->>U: Answer with graph-assisted context
+
+  Note over G,P: Based on README-level description; exact calls need source verification.
+

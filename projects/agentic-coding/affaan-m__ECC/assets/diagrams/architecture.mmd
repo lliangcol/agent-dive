@@ -1,0 +1,17 @@
+flowchart LR
+  User["Developer / AI Agent"] --> Harness["Claude Code / Codex / OpenCode / Cursor / Gemini / Zed"]
+  Harness --> Adapter["Harness adapter surface"]
+  Adapter --> Shared["Shared workflow assets"]
+  Shared --> Skills["skills and agents"]
+  Shared --> Rules["rules and instructions"]
+  Shared --> Hooks["hooks and hook scripts"]
+  Shared --> MCP["MCP configs"]
+  Shared --> Commands["commands and CLI shims"]
+  CLI["ecc CLI"] --> Installer["Selective install runtime"]
+  Installer --> Adapter
+  CLI --> Operator["Operator tools"]
+  Operator --> Sessions["sessions / status / work-items"]
+  Operator --> ControlPane["control pane"]
+  Hooks --> Gates["quality / security / memory / context gates"]
+  MCP --> Tools["external tools and MCP servers"]
+  Sessions --> ControlPane

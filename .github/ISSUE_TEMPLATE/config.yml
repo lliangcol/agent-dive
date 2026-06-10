@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 安全问题
+    url: https://docs.github.com/code-security/security-advisories/guidance-on-reporting-and-writing/privately-reporting-a-security-vulnerability
+    about: 请不要公开粘贴敏感信息。先阅读 SECURITY.md，再使用仓库启用的私密安全报告入口或维护者公开联系方式。

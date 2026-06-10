@@ -1,0 +1,57 @@
+{
+  "project_id": "ruvnet__ruflo",
+  "name": "Ruflo",
+  "github_url": "https://github.com/ruvnet/ruflo",
+  "homepage": "https://github.com/ruvnet/ruflo",
+  "category": "multi-agent",
+  "collect_level": "Level A",
+  "status": "analyzing",
+  "license": "MIT",
+  "primary_language": "TypeScript / JavaScript",
+  "default_branch": "main",
+  "collected_at": "2026-06-11",
+  "github_snapshot": {
+    "stars": 58826,
+    "forks": 6759,
+    "open_issues_count": 634,
+    "pushed_at": null,
+    "source": "GitHub API snapshot and selected source files"
+  },
+  "source_snapshot": {
+    "commit": "6a2964ac94e10ca9916da030302686c725638adb",
+    "snapshot_date": "2026-06-11",
+    "source_cache_path": ".cache/sources/ruvnet__ruflo",
+    "source_status": "selected_files_checked"
+  },
+  "verification": {
+    "runtime_status": "not_run",
+    "tests_status": "not_run",
+    "source_review_status": "partial",
+    "diagram_status": "draft",
+    "learning_notes_status": "created"
+  },
+  "evidence": {
+    "evidence_file": "projects/multi-agent/ruvnet__ruflo/evidence.md",
+    "last_verified_at": null
+  },
+  "tags": [
+    "multi-agent",
+    "swarm",
+    "mcp",
+    "claude-code",
+    "codex",
+    "memory",
+    "plugin-system",
+    "agentic-coding"
+  ],
+  "suitable_for": [
+    "multi-agent CLI and MCP architecture study",
+    "plugin lite versus full install boundary study",
+    "swarm, workflow, and memory design comparison"
+  ],
+  "not_suitable_for": [
+    "assuming Codex .agents support without runtime validation",
+    "installing full profile before dry-run write-scope review"
+  ],
+  "maintainer_notes": "First-pass AgentDive collection. GitHub metadata, README, package metadata, plugin manifests, .agents config, and selected v3 source paths were checked. CLI, MCP, plugin, and Codex behavior are pending."
+}

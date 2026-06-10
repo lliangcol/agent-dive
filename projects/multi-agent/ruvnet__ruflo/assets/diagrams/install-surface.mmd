@@ -1,0 +1,13 @@
+flowchart LR
+  Start["User chooses install path"] --> Plugin["Claude Code plugin lite"]
+  Start --> Full["CLI full install"]
+  Start --> Codex["Codex .agents path"]
+  Plugin --> P1["/plugin marketplace add ruvnet/ruflo"]
+  Plugin --> P2["Install ruflo-* plugins"]
+  P2 --> PLimit["Commands / agents / skills only; MCP not registered by default"]
+  Full --> F1["npx ruflo@latest init wizard"]
+  Full --> F2["Writes .claude, .claude-flow, settings, helpers"]
+  Full --> F3["Registers MCP server and hooks"]
+  Codex --> C1[".agents/config.toml"]
+  Codex --> C2[".agents/skills"]
+  C2 --> CNote["Runtime loading still requires Codex verification"]

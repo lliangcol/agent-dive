@@ -1,0 +1,61 @@
+{
+  "project_id": "rtk-ai__rtk",
+  "name": "RTK",
+  "github_url": "https://github.com/rtk-ai/rtk",
+  "homepage": "https://www.rtk-ai.app",
+  "category": "agentic-coding",
+  "collect_level": "Level B",
+  "status": "analyzing",
+  "license": "Apache-2.0",
+  "primary_language": "Rust",
+  "default_branch": "develop",
+  "collected_at": "2026-06-11",
+  "github_snapshot": {
+    "stars": 60936,
+    "forks": 3741,
+    "open_issues_count": 1164,
+    "pushed_at": null,
+    "source": "GitHub API snapshot and collection notes"
+  },
+  "source_snapshot": {
+    "commit": "6785a6c7695d7273e722214a295249a84819b6f0",
+    "snapshot_date": "2026-06-11",
+    "source_cache_path": ".cache/sources/rtk-ai__rtk",
+    "source_status": "selected_docs_checked"
+  },
+  "verification": {
+    "runtime_status": "not_run",
+    "tests_status": "not_run",
+    "source_review_status": "partial",
+    "diagram_status": "draft",
+    "learning_notes_status": "created"
+  },
+  "evidence": {
+    "evidence_file": "projects/agentic-coding/rtk-ai__rtk/evidence.md",
+    "last_verified_at": null
+  },
+  "tags": [
+    "agentic-coding",
+    "token-optimization",
+    "cli-proxy",
+    "command-output-filtering",
+    "hooks",
+    "rust",
+    "claude-code",
+    "codex",
+    "gemini-cli",
+    "cursor",
+    "telemetry"
+  ],
+  "suitable_for": [
+    "command-output compression study",
+    "hook-based command rewrite architecture learning",
+    "token savings analytics and raw-output recovery design study"
+  ],
+  "not_suitable_for": [
+    "treating README savings as reproduced evidence",
+    "installing global hooks before dry-run",
+    "assuming Codex prompt guidance enforces transparent rewriting"
+  ],
+  "maintainer_notes": "First-pass AgentDive collection. Metadata, README, architecture docs, hook docs, and a shallow source snapshot were checked. Local install, target-agent runtime behavior, tests, and benchmarks are pending."
+}

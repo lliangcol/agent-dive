@@ -1,0 +1,16 @@
+flowchart TD
+  Symptom["Graphify not working"] --> Cmd{"Command found?"}
+  Cmd -- "No" --> Install["Check uv/pipx install of graphifyy and PATH"]
+  Cmd -- "Yes" --> Shell{"Using PowerShell?"}
+  Shell -- "Yes" --> PS["Use graphify . instead of /graphify ."]
+  Shell -- "No" --> Build{"Graph artifacts generated?"}
+  PS --> Build
+  Build -- "No" --> Logs["Check CLI logs, Python version, extras, permissions"]
+  Build -- "Yes" --> Quality{"Graph answers useful?"}
+  Quality -- "No" --> Scope["Check input scope, ignore rules, docs availability, semantic backend"]
+  Quality -- "Yes" --> Integrate{"Assistant integration active?"}
+  Integrate -- "No" --> Hook["Check platform install files and hooks"]
+  Integrate -- "Yes" --> Done["Record verified setup"]
+
+  Security["Before private repos:\nconfirm semantic extraction data boundary."] -.-> Scope
+

@@ -1,0 +1,28 @@
+sequenceDiagram
+  %% Basis: official architecture data flow; source-level details pending.
+  participant User
+  participant CLI as HermesCLI
+  participant Agent as AIAgent
+  participant Prompt as prompt_builder
+  participant Runtime as runtime_provider
+  participant Model as Model API
+  participant Tools as model_tools / registry
+  participant State as SessionDB
+
+  User->>CLI: Enter message
+  CLI->>Agent: process_input -> run_conversation
+  Agent->>Prompt: build_system_prompt
+  Agent->>Runtime: resolve provider and model
+  Agent->>Model: send messages and tools schema
+  alt model requests tool
+    Model-->>Agent: tool call
+    Agent->>Tools: handle_function_call
+    Tools-->>Agent: tool result
+    Agent->>Model: continue loop with tool result
+  else final answer
+    Model-->>Agent: final response
+  end
+  Agent->>State: save session
+  Agent-->>CLI: response
+  CLI-->>User: display
+

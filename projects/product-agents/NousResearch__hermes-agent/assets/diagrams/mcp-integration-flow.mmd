@@ -1,0 +1,20 @@
+flowchart TB
+  %% Basis: official MCP docs. Exact client implementation pending source verification.
+  CONFIG["~/.hermes/config.yaml<br/>mcp_servers"]
+  MCPCLIENT["Hermes MCP client"]
+  SERVER["MCP server<br/>stdio or HTTP"]
+  PROBE["Tool discovery / probe"]
+  FILTER["Per-server tool filtering"]
+  REG["Hermes tool registry"]
+  AGENT["AIAgent"]
+  CALL["Model tool call"]
+
+  CONFIG --> MCPCLIENT
+  MCPCLIENT --> SERVER
+  SERVER --> PROBE
+  PROBE --> FILTER
+  FILTER --> REG
+  REG --> AGENT
+  AGENT --> CALL
+  CALL --> MCPCLIENT
+  MCPCLIENT --> SERVER

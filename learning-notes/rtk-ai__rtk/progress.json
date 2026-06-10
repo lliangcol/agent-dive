@@ -1,0 +1,25 @@
+{
+  "project_id": "rtk-ai__rtk",
+  "project_name": "RTK",
+  "github_url": "https://github.com/rtk-ai/rtk",
+  "status": "not_started",
+  "current_stage": "analyzing",
+  "completed_tasks": 0,
+  "total_tasks": 36,
+  "last_studied_at": "2026-06-11",
+  "blocked_items": [
+    "Local RTK install and version verification are not complete",
+    "rtk rewrite and command-filter smoke tests are not run",
+    "Target-agent hook install and rollback paths are not verified",
+    "Token savings numbers are not reproduced",
+    "Rust test suite and telemetry source path are not fully verified"
+  ],
+  "next_actions": [
+    "Install or build RTK in a temporary environment",
+    "Run rtk rewrite and command filter smoke tests",
+    "Verify raw-output tee recovery with RTK_TEE_DIR in a temporary directory"
+  ],
+  "evidence_file": "projects/agentic-coding/rtk-ai__rtk/evidence.md",
+  "review_questions_done": false,
+  "final_summary_done": false
+}

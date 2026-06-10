@@ -1,0 +1,39 @@
+name: 内容或流程问题
+description: 报告项目资料、模板、校验脚本或文档入口中的问题。
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        请提供可定位、可验证的信息。不要粘贴密钥、token、本机私有路径或未脱敏日志。
+  - type: input
+    id: location
+    attributes:
+      label: 位置
+      description: 相关文件、目录、项目 ID 或章节标题。
+      placeholder: projects/agentic-coding/example__repo/README.md
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: 问题描述
+      description: 说明当前内容哪里不正确、不清晰或无法执行。
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: 证据
+      description: 来源链接、运行输出、源码位置或复现步骤。
+    validations:
+      required: false
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望结果
+      description: 说明你认为应该如何修正。
+    validations:
+      required: false

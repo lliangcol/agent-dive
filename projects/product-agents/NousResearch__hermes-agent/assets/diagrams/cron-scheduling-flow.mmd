@@ -1,0 +1,18 @@
+sequenceDiagram
+  %% Basis: official architecture page. Job schema and failure behavior pending source verification.
+  participant Scheduler
+  participant Jobs as jobs.json
+  participant Agent as Fresh AIAgent
+  participant Skills as Attached Skills
+  participant Delivery
+  participant Platform
+
+  Scheduler->>Jobs: load due jobs
+  Scheduler->>Agent: create fresh agent
+  Scheduler->>Skills: inject attached skills as context
+  Skills-->>Agent: skill context
+  Agent-->>Scheduler: job response
+  Scheduler->>Delivery: send result
+  Delivery->>Platform: platform message
+  Scheduler->>Jobs: update state and next_run
+

@@ -1,0 +1,15 @@
+flowchart LR
+  Repo["Target repository"] --> Graphify["Graphify"]
+  Graphify --> Out["graphify-out"]
+  Out --> Report["Human report"]
+  Out --> Json["Machine-readable graph"]
+  Out --> Html["Interactive graph"]
+  Json --> MCP["Optional MCP server"]
+  Report --> Codex["Codex / AGENTS.md guidance"]
+  MCP --> Codex
+  Json --> Claude["Claude Code / skill"]
+  Json --> Cursor["Cursor / rules"]
+  Json --> Other["OpenCode, Gemini CLI, Aider, etc."]
+
+  Guard["Integration guardrails:\nverify write paths, API keys, private data, and uninstall path before production use."] -.-> Graphify
+

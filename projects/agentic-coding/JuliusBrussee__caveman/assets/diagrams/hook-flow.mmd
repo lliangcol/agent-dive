@@ -1,0 +1,19 @@
+flowchart LR
+  Session["Claude Code session starts"] --> StartHook["caveman-activate.js\nSessionStart hook"]
+  StartHook --> WriteFlag["Write active mode flag"]
+  StartHook --> Context["Emit hidden rules context"]
+
+  Prompt["User prompt submitted"] --> Tracker["caveman-mode-tracker.js\nUserPromptSubmit hook"]
+  Tracker --> Parse["Parse /caveman or natural-language mode switch"]
+  Parse --> UpdateFlag["Update or delete mode flag"]
+  UpdateFlag --> Reminder["Emit per-turn reminder when active"]
+
+  WriteFlag --> Flag[".caveman-active flag"]
+  UpdateFlag --> Flag
+  Flag --> Statusline["statusline script reads flag"]
+  Statusline --> Badge["Display current mode"]
+
+  Context --> Reply["Assistant replies in selected compression mode"]
+  Reminder --> Reply
+
+  Note["Basis: src/hooks/README.md.\nExact file paths and symlink safety pending source/runtime verification."] -.-> Flag

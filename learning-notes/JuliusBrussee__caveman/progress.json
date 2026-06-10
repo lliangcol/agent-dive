@@ -1,0 +1,24 @@
+{
+  "project_id": "JuliusBrussee__caveman",
+  "project_name": "Caveman",
+  "github_url": "https://github.com/JuliusBrussee/caveman",
+  "status": "not_started",
+  "current_stage": "analyzing",
+  "completed_tasks": 0,
+  "total_tasks": 35,
+  "last_studied_at": "2026-06-11",
+  "blocked_items": [
+    "Unified installer dry-run is not verified",
+    "Local agent installation and uninstall behavior are not verified",
+    "Source-level call chains for installer, hooks, MCP shrink, and memory compression are not verified",
+    "Benchmarks and token statistics are not reproduced"
+  ],
+  "next_actions": [
+    "Run installer --list in a temporary clone",
+    "Run installer dry-run and record write scope",
+    "Trace installer, hooks, MCP shrink, and memory compression scripts"
+  ],
+  "evidence_file": "projects/agentic-coding/JuliusBrussee__caveman/evidence.md",
+  "review_questions_done": false,
+  "final_summary_done": false
+}

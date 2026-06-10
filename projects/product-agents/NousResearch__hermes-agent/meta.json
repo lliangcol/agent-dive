@@ -1,0 +1,57 @@
+{
+  "project_id": "NousResearch__hermes-agent",
+  "name": "Hermes Agent",
+  "github_url": "https://github.com/NousResearch/hermes-agent",
+  "homepage": "https://github.com/NousResearch/hermes-agent",
+  "category": "product-agents",
+  "collect_level": "Level A",
+  "status": "analyzing",
+  "license": "MIT",
+  "primary_language": "Python",
+  "default_branch": "main",
+  "collected_at": "2026-06-10",
+  "github_snapshot": {
+    "stars": 189655,
+    "forks": 32817,
+    "open_issues_count": 19701,
+    "pushed_at": "2026-06-10T15:24:05Z",
+    "source": "GitHub API snapshot recorded in collect-report.md"
+  },
+  "source_snapshot": {
+    "commit": "a72bb03757c0c925c686f9774eefc8dc5a77b329",
+    "snapshot_date": "2026-06-10",
+    "source_cache_path": ".cache/sources/NousResearch__hermes-agent",
+    "source_status": "metadata_and_docs_checked"
+  },
+  "verification": {
+    "runtime_status": "not_run",
+    "tests_status": "not_run",
+    "source_review_status": "partial",
+    "diagram_status": "draft",
+    "learning_notes_status": "created"
+  },
+  "evidence": {
+    "evidence_file": "projects/product-agents/NousResearch__hermes-agent/evidence.md",
+    "last_verified_at": null
+  },
+  "tags": [
+    "product-agent",
+    "agent-loop",
+    "tool-calling",
+    "memory",
+    "mcp",
+    "cron",
+    "gateway",
+    "skills"
+  ],
+  "suitable_for": [
+    "product-grade agent architecture study",
+    "tool and skill system study",
+    "memory, gateway, MCP, and scheduling boundary analysis"
+  ],
+  "not_suitable_for": [
+    "claiming local runtime readiness before hermes doctor passes",
+    "copying terminal, gateway, or MCP permissions without sandbox review"
+  ],
+  "maintainer_notes": "First-pass AgentDive collection. README, GitHub metadata, official architecture docs, and generated diagrams were checked. Local install, hermes doctor, function-level source call chains, and integration paths are pending."
+}

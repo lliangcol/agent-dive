@@ -1,0 +1,41 @@
+{
+  "project_id": "owner__repo",
+  "name": "Project Name",
+  "github_url": "https://github.com/owner/repo",
+  "homepage": "",
+  "category": "agentic-coding",
+  "collect_level": "Level A",
+  "status": "analyzing",
+  "license": "",
+  "primary_language": "",
+  "default_branch": "",
+  "collected_at": "YYYY-MM-DD",
+  "github_snapshot": {
+    "stars": null,
+    "forks": null,
+    "open_issues_count": null,
+    "pushed_at": null,
+    "source": "GitHub API or manual page check"
+  },
+  "source_snapshot": {
+    "commit": null,
+    "snapshot_date": "YYYY-MM-DD",
+    "source_cache_path": ".cache/sources/owner__repo",
+    "source_status": "not_cloned"
+  },
+  "verification": {
+    "runtime_status": "not_run",
+    "tests_status": "not_run",
+    "source_review_status": "partial",
+    "diagram_status": "draft",
+    "learning_notes_status": "created"
+  },
+  "evidence": {
+    "evidence_file": "projects/<category>/<owner__repo>/evidence.md",
+    "last_verified_at": null
+  },
+  "tags": [],
+  "suitable_for": [],
+  "not_suitable_for": [],
+  "maintainer_notes": ""
+}

@@ -1,0 +1,17 @@
+sequenceDiagram
+  participant Client as MCP client / Agent
+  participant Shrink as caveman-shrink proxy
+  participant Server as Upstream MCP server
+
+  Client->>Shrink: initialize / list request
+  Shrink->>Server: forward request unchanged
+  Server-->>Shrink: tools/list, prompts/list, resources/list response
+  Shrink->>Shrink: compress configured prose fields
+  Shrink-->>Client: return shorter metadata
+
+  Client->>Shrink: tools/call request
+  Shrink->>Server: forward tool call unchanged
+  Server-->>Shrink: tool result
+  Shrink-->>Client: pass result unchanged
+
+  Note over Shrink: Basis: caveman-shrink README. Source-level JSON-RPC behavior pending verification.

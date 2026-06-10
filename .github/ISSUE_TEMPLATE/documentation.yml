@@ -1,0 +1,27 @@
+name: 文档改进
+description: 改进 README、USAGE、学习路线、知识库或模板说明。
+title: "[Docs]: "
+labels:
+  - documentation
+body:
+  - type: input
+    id: doc_location
+    attributes:
+      label: 文档位置
+      placeholder: USAGE.md
+    validations:
+      required: true
+  - type: textarea
+    id: change
+    attributes:
+      label: 建议修改
+      description: 说明要新增、删除、澄清或重写的内容。
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: 背景或依据
+      description: 可选。给出相关链接、上下文或问题场景。
+    validations:
+      required: false

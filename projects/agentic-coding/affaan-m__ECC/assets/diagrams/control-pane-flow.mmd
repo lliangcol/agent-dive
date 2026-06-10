@@ -1,0 +1,11 @@
+flowchart LR
+  User["Operator"] --> CLI["ecc control-pane"]
+  CLI --> Entry["scripts/control-pane.js"]
+  Entry --> Server["scripts/lib/control-pane/server.js"]
+  Server --> State["ECC state database"]
+  Server --> ECC2["ECC2 database"]
+  Server --> Snapshot["control pane snapshot"]
+  Snapshot --> UI["local HTTP UI"]
+  UI --> User
+  UI --> Actions["optional allowlist actions"]
+  Actions --> State

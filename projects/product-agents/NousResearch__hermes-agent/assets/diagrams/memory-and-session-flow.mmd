@@ -1,0 +1,21 @@
+flowchart TB
+  %% Basis: official memory docs and architecture page. Exact write paths pending source verification.
+  START["Session start"]
+  MEMFILES["MEMORY.md / USER.md<br/>bounded curated memory"]
+  PROMPT["System prompt frozen snapshot"]
+  AGENT["AIAgent"]
+  MEMORY_TOOL["memory tool<br/>add / replace / remove"]
+  SESSION["Session storage<br/>SQLite + FTS5"]
+  SEARCH["session_search / recall"]
+  NEXT["Next session"]
+
+  MEMFILES --> START
+  START --> PROMPT
+  PROMPT --> AGENT
+  AGENT --> MEMORY_TOOL
+  MEMORY_TOOL --> MEMFILES
+  AGENT --> SESSION
+  SESSION --> SEARCH
+  SEARCH --> AGENT
+  MEMFILES --> NEXT
+  NEXT --> START

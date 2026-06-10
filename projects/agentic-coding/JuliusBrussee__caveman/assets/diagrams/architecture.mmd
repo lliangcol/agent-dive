@@ -1,0 +1,27 @@
+flowchart LR
+  User["User / AI coding assistant"] --> Install["Unified installer\nbin/install.js"]
+  Install --> Claude["Claude Code plugin\nskills + hooks + statusline"]
+  Install --> Codex["Codex skill\nnpx skills add"]
+  Install --> Gemini["Gemini extension"]
+  Install --> OtherAgents["Other agent rule files\nCursor, Windsurf, Cline, OpenCode"]
+
+  Claude --> Skill["caveman skill rules"]
+  Codex --> Skill
+  Gemini --> Skill
+  OtherAgents --> Skill
+
+  Skill --> Output["Compressed technical replies"]
+
+  Claude --> Hooks["src/hooks\nSessionStart + UserPromptSubmit"]
+  Hooks --> Flag["Mode flag in agent config dir"]
+  Flag --> Statusline["Statusline badge"]
+
+  Install --> MCP["caveman-shrink MCP proxy"]
+  MCP --> Upstream["Upstream MCP server"]
+  MCP --> Metadata["Shorter tool / prompt / resource descriptions"]
+
+  Skill --> Compress["caveman-compress\nmemory file compression"]
+  Skill --> Stats["caveman-stats\ntoken savings display"]
+  Skill --> Crew["cavecrew subagents"]
+
+  Note["Basis: GitHub README, INSTALL.md, CLAUDE.md, hooks README, MCP shrink README.\nLocal install and source call chains pending verification."] -.-> Install

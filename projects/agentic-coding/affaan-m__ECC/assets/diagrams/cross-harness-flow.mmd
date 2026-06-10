@@ -1,0 +1,20 @@
+flowchart TD
+  Source["Durable workflow source"] --> Skills["skills/SKILL.md"]
+  Source --> Rules["rules/ and AGENTS.md"]
+  Source --> Hooks["hooks/hooks.json and scripts/hooks"]
+  Source --> MCP[".mcp.json and mcp-configs"]
+  Source --> Commands["commands/ and scripts/"]
+  Skills --> Claude["Claude Code plugin"]
+  Rules --> Claude
+  Hooks --> Claude
+  MCP --> Claude
+  Skills --> Codex["Codex plugin / AGENTS / skills"]
+  Rules --> Codex
+  MCP --> Codex
+  Hooks -. "instruction-backed only; no native hook parity verified" .-> Codex
+  Skills --> OpenCode["OpenCode plugin / events"]
+  Hooks --> OpenCode
+  Commands --> OpenCode
+  Skills --> Cursor["Cursor rules / hooks / skills copies"]
+  Hooks --> Cursor
+  Rules --> Cursor

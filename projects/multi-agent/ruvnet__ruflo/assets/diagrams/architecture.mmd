@@ -1,0 +1,17 @@
+flowchart TD
+  User["Developer / AI Agent"] --> Entry["ruflo CLI / Claude Code plugin / Codex .agents"]
+  Entry --> CLI["@claude-flow/cli"]
+  CLI --> MCP["MCP server and tools"]
+  CLI --> Init["init / hooks / settings generators"]
+  MCP --> Swarm["SwarmCoordinator"]
+  Swarm --> Agents["Agent domain entities"]
+  Swarm --> Workflow["WorkflowEngine"]
+  Workflow --> Tasks["Tasks and rollback"]
+  Agents --> Memory["Memory backends"]
+  Workflow --> Memory
+  Memory --> SQLite["SQLite structured store"]
+  Memory --> AgentDB["AgentDB vector store"]
+  CLI --> Plugins["Plugin manager and ruflo-* plugins"]
+  Plugins --> Hooks["Claude Code hooks"]
+  Entry --> Web["Web UI / mcp-bridge"]
+  CLI --> Verify["Witness verification"]

@@ -1,0 +1,19 @@
+sequenceDiagram
+  %% Basis: official architecture page. Adapter-specific behavior pending source verification.
+  participant Platform as Messaging Platform
+  participant Adapter as Platform Adapter
+  participant Gateway as GatewayRunner
+  participant Session as SessionStore
+  participant Agent as AIAgent
+  participant Delivery as Delivery
+
+  Platform->>Adapter: Incoming message
+  Adapter->>Gateway: MessageEvent
+  Gateway->>Gateway: authorize user
+  Gateway->>Session: resolve session key and history
+  Gateway->>Agent: create agent with session history
+  Agent-->>Gateway: response
+  Gateway->>Session: persist update
+  Gateway->>Delivery: deliver response
+  Delivery->>Platform: outbound message
+

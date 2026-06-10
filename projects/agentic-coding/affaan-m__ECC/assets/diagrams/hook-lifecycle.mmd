@@ -1,0 +1,16 @@
+flowchart TD
+  Event["Harness lifecycle event"] --> Matcher["hooks/hooks.json matcher"]
+  Matcher --> PreTool["PreToolUse"]
+  Matcher --> SessionStart["SessionStart"]
+  Matcher --> PostTool["PostToolUse"]
+  Matcher --> Stop["Stop"]
+  Matcher --> SessionEnd["SessionEnd"]
+  PreTool --> Bootstrap["plugin hook bootstrap"]
+  SessionStart --> Bootstrap
+  PostTool --> Bootstrap
+  Stop --> Bootstrap
+  SessionEnd --> Bootstrap
+  Bootstrap --> Runner["run-with-flags / dispatcher"]
+  Runner --> HookScript["scripts/hooks/*.js"]
+  HookScript --> Result["allow / warn / block / async record"]
+  Result --> Harness["Harness continues or stops"]

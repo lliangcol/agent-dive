@@ -1,0 +1,19 @@
+%% 依据：src/transcript.ts 和 render activity line 源码；真实 transcript JSONL 待采样验证。
+flowchart LR
+  JSONL["Transcript JSONL"] --> Parser["parseTranscript"]
+  Parser --> ToolUse["tool_use blocks"]
+  Parser --> ToolResult["tool_result blocks"]
+  Parser --> QueueOps["queue-operation entries"]
+  Parser --> Todos["TodoWrite, TaskCreate, TaskUpdate"]
+  Parser --> Assistant["assistant usage and advisorModel"]
+  Parser --> Compact["compact_boundary"]
+  ToolUse --> Tools["tools line"]
+  ToolUse --> Skills["skills line"]
+  ToolUse --> MCP["MCP line"]
+  ToolUse --> Agents["agents line"]
+  ToolResult --> Tools
+  ToolResult --> Agents
+  QueueOps --> Agents
+  Todos --> TodoLine["todo progress line"]
+  Assistant --> Session["session tokens and advisor"]
+  Compact --> ContextFallback["context-window fallback"]

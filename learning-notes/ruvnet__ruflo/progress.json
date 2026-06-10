@@ -1,0 +1,25 @@
+{
+  "project_id": "ruvnet__ruflo",
+  "project_name": "Ruflo",
+  "github_url": "https://github.com/ruvnet/ruflo",
+  "status": "not_started",
+  "current_stage": "analyzing",
+  "completed_tasks": 0,
+  "total_tasks": 39,
+  "last_studied_at": "2026-06-11",
+  "blocked_items": [
+    "Local Ruflo CLI and init commands are not verified",
+    "MCP server tool list is not verified",
+    "Claude Code plugin marketplace behavior is not verified",
+    "Codex .agents config and skills loading are not verified",
+    "Web UI and mcp-bridge are not verified"
+  ],
+  "next_actions": [
+    "Run read-only version/help commands for ruflo",
+    "Compare explicit @claude-flow/cli claude-flow bin",
+    "Trace CLI, command registry, MCP tools, swarm, workflow, and memory backends"
+  ],
+  "evidence_file": "projects/multi-agent/ruvnet__ruflo/evidence.md",
+  "review_questions_done": false,
+  "final_summary_done": false
+}

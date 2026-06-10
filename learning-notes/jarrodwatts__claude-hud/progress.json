@@ -1,0 +1,23 @@
+{
+  "project_id": "jarrodwatts__claude-hud",
+  "project_name": "Claude HUD",
+  "github_url": "https://github.com/jarrodwatts/claude-hud",
+  "status": "not_started",
+  "current_stage": "analyzing",
+  "completed_tasks": 0,
+  "total_tasks": 35,
+  "last_studied_at": "2026-06-11",
+  "blocked_items": [
+    "Real Claude Code plugin install is not verified",
+    "Windows npm test currently fails",
+    "Real statusline stdin and transcript JSONL samples are not captured"
+  ],
+  "next_actions": [
+    "Verify setup writes with a temporary CLAUDE_CONFIG_DIR",
+    "Isolate the Windows npm test failure group",
+    "Install in a test Claude Code profile and restart to verify HUD"
+  ],
+  "evidence_file": "projects/agentic-coding/jarrodwatts__claude-hud/evidence.md",
+  "review_questions_done": false,
+  "final_summary_done": false
+}

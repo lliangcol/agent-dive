@@ -1,0 +1,19 @@
+{
+  "project": "example-agent",
+  "github": "https://github.com/example/example-agent",
+  "status": "in-study",
+  "current_stage": "source-reading",
+  "completed_tasks": 12,
+  "total_tasks": 38,
+  "last_studied_at": "2026-06-10",
+  "blocked_items": [
+    "Tool registry implementation not fully understood"
+  ],
+  "next_actions": [
+    "Read tool executor module",
+    "Run custom tool demo",
+    "Update architecture diagram"
+  ],
+  "review_questions_done": false,
+  "final_summary_done": false
+}

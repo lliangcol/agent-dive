@@ -1,0 +1,18 @@
+flowchart LR
+  User["Developer or AI Agent"] --> Agent["Claude Code / Codex / Cursor / Gemini / other agent"]
+  Agent --> MCP["CodeGraph MCP Server"]
+  CLI["codegraph CLI"] --> Core["CodeGraph facade"]
+  MCP --> Engine["MCPEngine and ToolHandler"]
+  Engine --> Core
+  Core --> DB["SQLite .codegraph/codegraph.db"]
+  Core --> Extraction["Extraction orchestrator"]
+  Extraction --> TreeSitter["tree-sitter WASM grammars"]
+  Core --> Resolution["Reference resolver and framework resolvers"]
+  Core --> Graph["Graph queries and traversal"]
+  Core --> Sync["File watcher and incremental sync"]
+  Installer["Installer targets"] --> Config["Agent MCP configs"]
+  Config --> Agent
+  Extraction --> DB
+  Resolution --> DB
+  Graph --> DB
+  Sync --> Core

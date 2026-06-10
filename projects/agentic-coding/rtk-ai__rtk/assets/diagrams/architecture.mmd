@@ -1,0 +1,27 @@
+flowchart TD
+    User["Developer or AI coding agent"] --> Cmd["Shell command"]
+    Cmd --> Hook{"Agent integration"}
+    Hook -->|transparent hook or plugin| Rewrite["rtk rewrite"]
+    Hook -->|prompt guidance only| Manual["Agent chooses rtk command"]
+    Rewrite --> Registry["discover registry and lexer"]
+    Registry --> Routed["rtk <command>"]
+    Manual --> Routed
+    Routed --> Cli["src/main.rs CLI router"]
+    Cli --> Cmds["src/cmds ecosystem filters"]
+    Cmds --> Native["Native command execution"]
+    Native --> Filter["Filter, group, truncate, dedupe"]
+    Filter --> Output["Compact output to LLM context"]
+    Filter --> Tracking["tracking SQLite"]
+    Filter --> Tee["tee raw output on failures"]
+
+    subgraph "Lifecycle and safety"
+      Init["src/hooks/init.rs"]
+      Permissions["src/hooks/permissions.rs"]
+      Integrity["src/hooks/integrity.rs"]
+      Config["src/core/config.rs"]
+    end
+
+    Init --> Hook
+    Permissions --> Rewrite
+    Integrity --> Hook
+    Config --> Registry

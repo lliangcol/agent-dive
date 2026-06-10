@@ -1,0 +1,14 @@
+flowchart TD
+    Command["Filtered RTK command"] --> Tracking["Local tracking SQLite"]
+    Tracking --> Gain["rtk gain summaries"]
+    Tracking --> Discover["rtk discover missed savings"]
+    Command --> Tee["Raw-output tee on failures"]
+    Tee --> Recovery["User can inspect full output"]
+
+    Tracking --> TelemetryGate{"Telemetry opt-in?"}
+    TelemetryGate -->|no| LocalOnly["Local only"]
+    TelemetryGate -->|yes| Aggregate["Anonymous aggregate payload"]
+    Aggregate --> Endpoint["Telemetry endpoint"]
+
+    Env["RTK_TELEMETRY_DISABLED=1"] --> TelemetryGate
+    Forget["rtk telemetry forget"] --> LocalDelete["Delete local data and request erasure"]

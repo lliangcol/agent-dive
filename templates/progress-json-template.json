@@ -1,0 +1,15 @@
+{
+  "project_id": "owner__repo",
+  "project_name": "Project Name",
+  "github_url": "https://github.com/owner/repo",
+  "status": "not_started",
+  "current_stage": "analyzing",
+  "completed_tasks": 0,
+  "total_tasks": 0,
+  "last_studied_at": null,
+  "blocked_items": [],
+  "next_actions": [],
+  "evidence_file": "projects/<category>/<owner__repo>/evidence.md",
+  "review_questions_done": false,
+  "final_summary_done": false
+}

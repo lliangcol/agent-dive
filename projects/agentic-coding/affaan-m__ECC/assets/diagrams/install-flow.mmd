@@ -1,0 +1,14 @@
+flowchart TD
+  User["User command"] --> CLI["scripts/ecc.js"]
+  CLI --> PlanCmd["scripts/install-plan.js"]
+  CLI --> ApplyCmd["scripts/install-apply.js"]
+  PlanCmd --> Request["normalize install request"]
+  ApplyCmd --> Request
+  Request --> Manifests["install manifests / profiles / modules / components"]
+  Manifests --> Target["target adapter"]
+  Target --> Operations["planned file operations"]
+  Operations --> DryRun["dry-run / JSON plan"]
+  Operations --> Apply["apply install plan"]
+  Apply --> Files["target harness files"]
+  Apply --> State["install-state"]
+  Files --> Harness["Codex / Claude / OpenCode / Cursor / other"]

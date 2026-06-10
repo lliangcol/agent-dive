@@ -1,0 +1,21 @@
+%% 依据：README、.claude-plugin/plugin.json、commands/setup.md、commands/configure.md、src/index.ts；真实 Claude Code statusline 运行待验证。
+flowchart TD
+  User["Claude Code user"] --> Plugin["Claude HUD plugin"]
+  Plugin --> Setup["/claude-hud:setup"]
+  Plugin --> Configure["/claude-hud:configure"]
+  Setup --> Settings["Claude settings.json statusLine.command"]
+  Configure --> HudConfig["plugins/claude-hud/config.json"]
+  Settings --> Runtime["node or bun runs dist/index.js"]
+  Runtime --> Stdin["Claude Code statusline stdin JSON"]
+  Runtime --> Transcript["Transcript JSONL"]
+  Runtime --> Git["git status"]
+  Runtime --> ConfigReader["CLAUDE.md, rules, MCP, hooks counts"]
+  Runtime --> UsageSnapshot["optional external usage snapshot"]
+  Stdin --> RenderContext["RenderContext"]
+  Transcript --> RenderContext
+  Git --> RenderContext
+  ConfigReader --> RenderContext
+  HudConfig --> RenderContext
+  UsageSnapshot --> RenderContext
+  RenderContext --> Renderer["render compact or expanded HUD"]
+  Renderer --> Stdout["statusline stdout lines"]
