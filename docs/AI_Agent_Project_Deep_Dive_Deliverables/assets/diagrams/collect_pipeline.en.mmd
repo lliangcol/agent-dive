@@ -1,0 +1,10 @@
+flowchart LR
+  A[Parse GitHub URL] --> B[Get repository metadata]
+B --> C{Meets the collection standard?}
+  C -- no --> D[Do not collect yet: output reason]
+  C -- yes --> E[Determine classification and level]
+  E --> F[Generate documentation]
+  F --> G[Generate diagrams]
+  G --> H[Generate learning materials]
+  H --> I[Update index]
+  I --> J[Output collection report]

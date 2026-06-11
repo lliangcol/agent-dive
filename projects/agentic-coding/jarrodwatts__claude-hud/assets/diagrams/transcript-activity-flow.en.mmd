@@ -1,0 +1,19 @@
+%% Based on: src/transcript.ts and render activity line source code; the real transcript JSONL needs to be sampled and verified.
+flowchart LR
+  JSONL["Transcript JSONL"] --> Parser["parseTranscript"]
+  Parser --> ToolUse["tool_use blocks"]
+  Parser --> ToolResult["tool_result blocks"]
+  Parser --> QueueOps["queue-operation entries"]
+  Parser --> Todos["TodoWrite, TaskCreate, TaskUpdate"]
+  Parser --> Assistant["assistant usage and advisorModel"]
+  Parser --> Compact["compact_boundary"]
+  ToolUse --> Tools["tools line"]
+  ToolUse --> Skills["skills line"]
+  ToolUse --> MCP["MCP line"]
+  ToolUse --> Agents["agents line"]
+  ToolResult --> Tools
+  ToolResult --> Agents
+  QueueOps --> Agents
+  Todos --> TodoLine["todo progress line"]
+  Assistant --> Session["session tokens and advisor"]
+  Compact --> ContextFallback["context-window fallback"]

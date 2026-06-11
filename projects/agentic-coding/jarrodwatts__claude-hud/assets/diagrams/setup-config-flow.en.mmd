@@ -1,0 +1,16 @@
+%% Based on: commands/setup.md; no write was performed in the real Claude Code configuration.
+flowchart TD
+  Start["/claude-hud:setup"] --> Ghost["detect ghost install"]
+  Ghost --> Platform["detect platform, shell, OSTYPE"]
+  Platform --> Runtime["find node or bun"]
+  Runtime --> PluginDir["locate latest plugin cache version"]
+  PluginDir --> Generate["generate statusLine command"]
+  Generate --> Test["test generated command"]
+  Test --> Existing["read existing statusLine.command"]
+  Existing --> Backup["backup settings.json"]
+  Backup --> Choice{"existing non-claude-hud statusline?"}
+  Choice -- "yes" --> Ask["ask replace, keep, or cancel"]
+  Choice -- "no" --> Write["merge statusLine into settings.json"]
+  Ask -- "replace" --> Write
+  Ask -- "keep or cancel" --> Stop["no settings mutation except backup"]
+  Write --> Restart["restart Claude Code"]
