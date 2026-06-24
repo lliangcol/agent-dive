@@ -394,3 +394,45 @@
 1. 声明式 schema（`jsonschema`）替代 `check_project` 手写字段校验——独立 PR，重构量适中
 2. 双语一致性校验：将中英文档关键字段一致性纳入 `check-agent-dive.py`，防止翻译漂移重现
 3. `examples/mcp-demo/` 实现最小可运行 MCP 示例（只读工具，纯 Python，明确 schema）
+
+---
+
+## 第 13 轮（2026-06-25）
+
+**目标**：将 `examples/mcp-demo/` 从 README stub 升级为可运行最小 MCP 风格示例。
+
+**实际修改**：
+- `examples/mcp-demo/mcp_demo.py`（新建，~280 行）：
+  - `_coerce(value, schema_type)`：string/integer/number/boolean/array/object 各类型强转，含零范数防御
+  - `validate_input(params_schema, raw)`：JSON-Schema 子集校验（required 检查、默认值填充、类型强转、额外字段透传）
+  - `Tool` dataclass：`name/description/params_schema/fn/read_only`，`to_schema()` 返回 MCP 格式定义
+  - 三个只读内置工具：`get_weather`（5 城市 mock）、`calculate`（allowlist 算术防止代码执行）、`list_topics`（AI Agent 学习主题）
+  - `mcp_call(tool_name, arguments)`：MCP 请求/响应 envelope，`ok/isError/content/error` 字段
+  - `list_tools()`：返回 MCP 格式工具列表，按名称排序
+  - `main()` + `__main__` 入口，演示正常调用与错误回传
+- `tests/test_mcp_demo.py`（新建，59 个测试）：
+  - `TestCoerce`（9 个）：直接测试 `_coerce` 所有分支（string/bool 直通/int→bool/未知类型）
+  - `TestValidateInput`（11 个）：required/default/强转/extra keys/空 schema
+  - `TestGetWeather`（5 个）：celsius/fahrenheit/大小写/未知城市/所有城市
+  - `TestCalculate`（10 个）：加减乘除/幂/sqrt/pi/import 阻断/分号阻断/非法表达式
+  - `TestListTopics`（4 个）：all/具体分类/未知分类/core
+  - `TestToolSchema`（2 个）：to_schema 结构/read_only 标志
+  - `TestListTools`（3 个）：返回类型/全工具/排序
+  - `TestMcpCall`（11 个）：成功路径/未知工具/缺必填参/工具异常/不安全表达式/参数回显/工具名回显/华氏度
+  - `TestMain`（3 个）：main 输出/工具名称/错误案例
+  - `test_dunder_main_via_runpy`（1 个）：runpy `__main__`
+- `.github/workflows/ci.yml`：smoke test 新增 `python examples/mcp-demo/mcp_demo.py`
+- `OPTIMIZATION_SUMMARY.md`：更新至第 13 轮（252 测试、646 语句、7 文件 100%、6 个可运行示例）
+- `IMPLEMENTATION_PLAN.md`：追加本轮条目
+
+**验证结果**：
+- `python examples/mcp-demo/mcp_demo.py`：exit 0，工具列表正常，正常调用和错误回传均正确
+- `python -m pytest tests/ -q`：**252 passed**，覆盖率 **100.00%**（646 语句，7 文件）
+- `python scripts/check-agent-dive.py`：8 projects validated
+
+**未完成**：P2（声明式 schema）、P2（双语一致性校验）
+
+**下一轮建议**：
+1. 双语一致性校验：将中英文档关键字段一致性纳入 `check-agent-dive.py`，防止翻译漂移重现（范围可控，不引入新依赖）
+2. 声明式 schema（`jsonschema`）替代 `check_project` 手写字段校验——独立 PR，重构量适中
+3. `examples/` README 更新——为 mcp-demo 补充中英文说明，对齐其他示例的文档风格

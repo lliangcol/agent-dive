@@ -5,17 +5,17 @@
 
 ---
 
-## 当前状态（2026-06-25，第 12 轮）
+## 当前状态（2026-06-25，第 13 轮）
 
 | 指标 | 值 |
 |------|-----|
-| 测试数量 | **193 个**（从 0 开始） |
-| 代码覆盖率 | **100%**（6 个文件：`scripts/check-agent-dive.py` + 5 个 examples Python 文件，共 531 语句） |
+| 测试数量 | **252 个**（从 0 开始） |
+| 代码覆盖率 | **100%**（7 个文件：`scripts/check-agent-dive.py` + 6 个 examples Python 文件，共 646 语句） |
 | 覆盖率范围 | `--cov=scripts --cov=examples` |
 | 覆盖率门槛（pytest + CI） | 100%（分阶段：0% → 70% → 95% → 100%） |
 | CI 矩阵 | Python 3.10 / 3.11 / 3.12，3 并行 job |
 | 安全扫描 | gitleaks（全历史 fetch-depth: 0） |
-| 可运行示例 | 5 个（Agent Loop、ToolRegistry、并发调度、RAG、Anthropic SDK 接入） |
+| 可运行示例 | 6 个（Agent Loop、ToolRegistry、并发调度、RAG、Anthropic SDK 接入、MCP 风格工具服务） |
 | 项目校验通过 | 8 个（`python scripts/check-agent-dive.py`) |
 
 ---

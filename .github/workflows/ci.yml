@@ -66,3 +66,4 @@ jobs:
           python examples/tool-calling-demo/demo.py
           python examples/tool-calling-demo/parallel_demo.py
           python examples/rag-agent-demo/rag.py "What is an AI agent?"
+          python examples/mcp-demo/mcp_demo.py
