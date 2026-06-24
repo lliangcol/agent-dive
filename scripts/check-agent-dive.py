@@ -370,6 +370,7 @@ def check_placeholders() -> list[str]:
         "$(System.Collections.Hashtable",
         # Chinese residues
         "待补。",
+        "待填写",
         "学习闭环迁移时补齐的笔记骨架",
     ]
     project_docs = [

@@ -10,6 +10,20 @@ permissions:
   contents: read
 
 jobs:
+  secret-scan:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
   validate:
     name: Validate AgentDive content (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
@@ -26,11 +40,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Install pytest
-        run: pip install pytest
+      - name: Install pytest and coverage
+        run: pip install pytest pytest-cov
 
-      - name: Run unit tests
-        run: python -m pytest tests/ -v
+      - name: Run unit tests with coverage
+        run: python -m pytest tests/ -v --cov=scripts --cov-report=term-missing --cov-fail-under=95
 
       - name: Run repository checks
         run: python scripts/check-agent-dive.py
