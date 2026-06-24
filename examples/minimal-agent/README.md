@@ -70,3 +70,39 @@ def model(context: list[dict]) -> dict:
 - `context` 列表：贯穿整个循环的"工作记忆"
 - `finish` 工具：显式终止信号，而非隐式退出
 - 工具异常有捕获：单个工具出错不会终止整个 Agent
+
+---
+
+## 接入真实 LLM：agent_sdk.py
+
+`agent_sdk.py` 是 `agent.py` 的进阶版本，直接使用 Anthropic SDK 的 tool_use 功能。
+
+### 安装与运行
+
+```bash
+pip install anthropic
+export ANTHROPIC_API_KEY=sk-ant-...
+python examples/minimal-agent/agent_sdk.py "What is 12 + 30?"
+```
+
+API Key 缺失或包未安装时，脚本会打印清晰提示并以非零退出码退出，不会静默失败。
+
+### 与 agent.py 的区别
+
+| 对比项 | agent.py | agent_sdk.py |
+|--------|----------|--------------|
+| 模型层 | 本地玩具路由 | Anthropic SDK tool_use |
+| 外部依赖 | 无 | `pip install anthropic` |
+| API Key | 不需要 | `ANTHROPIC_API_KEY` |
+| 工具定义 | 自定义 dict | Anthropic input_schema 格式 |
+
+### 核心模式（client 可注入，方便测试 mock）
+
+```python
+def run_agent_sdk(question: str, client: Any, *, verbose: bool = True) -> str:
+    messages = [{"role": "user", "content": question}]
+    for step in range(1, MAX_STEPS + 1):
+        response = client.messages.create(model=..., tools=TOOL_DEFS, messages=messages)
+        if response.stop_reason == "end_turn":
+            return response.content[0].text
+        # 执行工具，将结果追加到 messages，继续循环

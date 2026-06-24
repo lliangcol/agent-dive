@@ -44,7 +44,7 @@ jobs:
         run: pip install pytest pytest-cov
 
       - name: Run unit tests with coverage
-        run: python -m pytest tests/ -v --cov=scripts --cov-report=term-missing --cov-report=xml:coverage.xml --cov-fail-under=95
+        run: python -m pytest tests/ -v --cov=scripts --cov-report=term-missing --cov-report=xml:coverage.xml --cov-fail-under=100
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
@@ -59,3 +59,8 @@ jobs:
 
       - name: Compile scripts
         run: python -m compileall scripts
+
+      - name: Smoke-test runnable examples
+        run: |
+          python examples/minimal-agent/agent.py "What is 3 + 4?"
+          python examples/tool-calling-demo/demo.py

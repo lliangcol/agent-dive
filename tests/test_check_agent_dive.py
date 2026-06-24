@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import importlib.util
 import json
+import runpy
+import subprocess
 import sys
 from pathlib import Path
 
@@ -844,3 +846,30 @@ def test_placeholders_dai_tian_xie(tmp_path, monkeypatch):
     _make_note(tmp_path, "01-first-impression.md", "# Notes\n\n待填写。\n")
     errors = check_placeholders()
     assert any("待填写" in e for e in errors)
+
+
+# ---------------------------------------------------------------------------
+# __main__ subprocess — end-to-end smoke (does NOT contribute to cov)
+# ---------------------------------------------------------------------------
+
+def test_check_agent_dive_runs_as_script():
+    """Run the script as __main__ and verify it exits 0 with 'passed' output."""
+    result = subprocess.run(
+        [sys.executable, str(_SCRIPT)],
+        capture_output=True,
+        text=True,
+        cwd=str(_SCRIPT.parents[1]),
+    )
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "passed" in result.stdout
+
+
+# ---------------------------------------------------------------------------
+# __main__ via runpy — in-process execution so pytest-cov traces line 423
+# ---------------------------------------------------------------------------
+
+def test_check_agent_dive_main_block_via_runpy():
+    """Execute __main__ block in-process so sys.exit(main()) is traced by coverage."""
+    with pytest.raises(SystemExit) as exc:
+        runpy.run_path(str(_SCRIPT), run_name="__main__")
+    assert exc.value.code == 0, "check-agent-dive.py exited non-zero when run via runpy"

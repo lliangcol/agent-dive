@@ -69,3 +69,41 @@ The return format stays the same — `{"tool": <name>, "args": {...}}` — and t
 - `context` list: the agent's working memory across the entire loop
 - `finish` tool: explicit termination signal (no implicit exit)
 - Tool exceptions are caught: one failing tool does not crash the agent
+
+---
+
+## Real LLM integration: agent_sdk.py
+
+`agent_sdk.py` is the next step up from `agent.py` — it uses the Anthropic SDK's
+native tool_use feature instead of the toy router.
+
+### Install and run
+
+```bash
+pip install anthropic
+export ANTHROPIC_API_KEY=sk-ant-...
+python examples/minimal-agent/agent_sdk.py "What is 12 + 30?"
+```
+
+If the package is missing or the key is not set, the script prints a clear message
+and exits with a non-zero code — no silent failure.
+
+### Comparison
+
+| | agent.py | agent_sdk.py |
+|---|---|---|
+| Model layer | Local toy router | Anthropic SDK tool_use |
+| External deps | None | `pip install anthropic` |
+| API key | Not required | `ANTHROPIC_API_KEY` |
+| Tool format | Custom dict | Anthropic `input_schema` |
+
+### Core pattern (client is injected for easy mocking in tests)
+
+```python
+def run_agent_sdk(question: str, client: Any, *, verbose: bool = True) -> str:
+    messages = [{"role": "user", "content": question}]
+    for step in range(1, MAX_STEPS + 1):
+        response = client.messages.create(model=..., tools=TOOL_DEFS, messages=messages)
+        if response.stop_reason == "end_turn":
+            return response.content[0].text
+        # Execute tool calls, append results to messages, continue loop

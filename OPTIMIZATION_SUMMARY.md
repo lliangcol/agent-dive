@@ -1,126 +1,133 @@
 # AgentDive 优化总结
 
-基于 `deep-research-report.md` 完成的真实代码修改。
+基于 `deep-research-report.md` 历经 9 轮持续改进的真实记录。  
+详细过程见 `CONTINUOUS_OPTIMIZATION_LOG.md`，任务跟踪见 `IMPLEMENTATION_PLAN.md`。
 
-## 已完成内容
+---
+
+## 当前状态（2026-06-25，第 9 轮）
+
+| 指标 | 值 |
+|------|-----|
+| 测试数量 | **126 个**（从 0 开始） |
+| 代码覆盖率 | **100%**（`scripts/check-agent-dive.py`，246 语句） |
+| 覆盖率门槛（pytest + CI） | 100%（分阶段：0% → 70% → 95% → 100%） |
+| CI 矩阵 | Python 3.10 / 3.11 / 3.12，3 并行 job |
+| 安全扫描 | gitleaks（全历史 fetch-depth: 0） |
+| 可运行示例 | 3 个（无外部依赖、ToolRegistry、Anthropic SDK 接入） |
+| 项目校验通过 | 8 个（`python scripts/check-agent-dive.py`) |
+
+---
+
+## 已完成的关键改进
 
 ### 1. 校验脚本强化（`scripts/check-agent-dive.py`）
 
 **`load_json()` 异常处理**
-- 之前：JSON 文件损坏时抛出原始 Python traceback
-- 之后：`ValueError` 包含文件路径、行列号、具体错误信息（例：`meta.json:3:1: invalid JSON: Expecting property name...`）
+- 之前：JSON 损坏时抛出原始 Python traceback
+- 之后：`ValueError` 包含文件路径、行列号、具体错误（如 `meta.json:3:1: invalid JSON: ...`）
 
 **`check_placeholders()` 模式扩展**
-- 新增 7 个检测模式：`To be replenished.`、`$(System.Collections.Hashtable`（PowerShell 变量替换失败产物）、`completed note skeleton during closed-loop transfer of learning`、`Next step: press the first unfinished task...`、`待补。`、`学习闭环迁移时补齐的笔记骨架`
-- 以上模式覆盖了此前通过校验的真实残留文本
+- 新增 8 个检测模式，涵盖：PowerShell 变量替换产物、英文/中文骨架说明、`To be replenished.`、`待补。`、`待填写`
+- 以上模式覆盖了此前通过校验的真实残留占位文本
 
 **`_rel()` 辅助函数**
-- 新增 `_rel(path: Path) -> str`，当路径在 ROOT 之外（如单元测试 `tmp_path`）时安全降级为绝对路径，而非抛出 ValueError
-- 影响 `check_todo_table()` 和 `load_json()` 的错误信息格式
+- 路径在 ROOT 之外时（如单元测试 `tmp_path`）安全降级为绝对路径，错误信息对 CI 和本地均友好
 
-### 2. 学习笔记骨架残留清理
+### 2. 学习笔记骨架清理
 
-清理 2 个项目（`colbymchenry__codegraph`、`NousResearch__hermes-agent`）共 **28 个文件**中的骨架占位文本：
-- 将 PowerShell 变量 `$(System.Collections.Hashtable.Evidence)` 替换为实际证据文件路径
-- 将骨架状态文本替换为可读的中性说明
-- 将 `To be replenished.` / `待补。` 替换为标准的待填说明文本
+清理 4 个项目（`colbymchenry__codegraph`、`NousResearch__hermes-agent`、`JuliusBrussee__caveman`、`safishamsi__graphify`）共 **42 个文件**中的骨架占位文本。
 
-### 3. 文档修复
+### 3. 测试体系建立与扩展
 
-**`CONTRIBUTING.en.md`**
-- 修复第 9 行 `master` → `main` 翻译漂移：`do not submit work directly on the master branch` → `do not push directly to the \`main\` branch`
-
-### 4. 版本库清理
-
-**`.gitignore`**
-- 新增 `.tmp-*` 规则，覆盖所有临时缓存文件
-
-**`.tmp-translation-cache.json`（753 KB）**
-- 从 git 跟踪中移除（`git rm --cached`），文件本身保留在磁盘
-
-### 5. 测试体系建立
-
-**`tests/test_check_agent_dive.py`（22 个测试）**
-
-| 测试类别 | 覆盖内容 |
-|----------|----------|
-| `split_markdown_row` | 基本分列、无尾管道符、空白裁剪、转义管道 |
-| `check_todo_table` | 正常通过、重复 task_id、所有行均被检查（无早退 bug）、列数错误、状态无效、ID 格式错误、完成标记 |
-| `count_todo_tasks` | 完成/总计计数 |
-| `load_json` | 有效 JSON、损坏 JSON 给出友好错误（含位置） |
-| `check_placeholders` | 6 种占位符模式检测 + 清洁文件通过 |
-
-**`pytest.ini`**
-- 标准测试配置
-
-### 6. CI 更新（`.github/workflows/ci.yml`）
-
-- Python 版本矩阵从单一 `3.11` 扩为 `3.10 / 3.11 / 3.12`
-- 新增 `pip install pytest` 和 `python -m pytest tests/ -v` 步骤
-
-## 修改文件清单
-
-| 文件 | 变更类型 |
-|------|----------|
-| `scripts/check-agent-dive.py` | 修复：`load_json()` 异常处理、`_rel()` 辅助函数、`check_placeholders()` 模式扩展 |
-| `.github/workflows/ci.yml` | 增强：Python 矩阵 + pytest 步骤 |
-| `.gitignore` | 增加：`.tmp-*` 规则 |
-| `.tmp-translation-cache.json` | 移出 git 跟踪 |
-| `CONTRIBUTING.en.md` | 修复：master→main 漂移 |
-| `learning-notes/colbymchenry__codegraph/05-integration-notes.en.md` | 骨架清理（针对性修复） |
-| `learning-notes/colbymchenry__codegraph/05-integration-notes.md` | 骨架清理 |
-| `learning-notes/colbymchenry__codegraph/00,01,03,04,06,07-*.en.md`（各 6 个） | 批量骨架清理 |
-| `learning-notes/colbymchenry__codegraph/00,01,03,04,06,07-*.md`（各 6 个） | 批量骨架清理 |
-| `learning-notes/NousResearch__hermes-agent/00~07-*.en.md`（8 个） | 批量骨架清理 |
-| `learning-notes/NousResearch__hermes-agent/00~07-*.md`（8 个） | 批量骨架清理 |
-| `tests/test_check_agent_dive.py` | 新建：22 个单元测试 |
-| `pytest.ini` | 新建：测试配置 |
-| `IMPLEMENTATION_PLAN.md` | 新建：任务清单 |
-| `OPTIMIZATION_SUMMARY.md` | 新建：本文件 |
-
-## 解决的报告问题
-
-| 报告问题 | 优先级 | 处理结果 |
+| 测试文件 | 测试数 | 覆盖内容 |
 |----------|--------|----------|
-| `load_json()` 无异常封装 | 中 | ✅ 已修复 |
-| 占位符检测模式过窄 | 中 | ✅ 已修复（+7 个模式） |
-| 英文学习笔记存在占位符残留 | 中 | ✅ 已清理（28 个文件） |
-| CONTRIBUTING.en.md `master`/`main` 翻译漂移 | 低 | ✅ 已修复 |
-| `.tmp-translation-cache.json` 被跟踪 | 中 | ✅ 已移出 |
-| 缺少单元测试 | 高 | ✅ 已建立（22 个） |
-| CI 仅测试 Python 3.11 | 中 | ✅ 已扩展（3.10/3.11/3.12） |
-| `check_todo_table()` 早退 bug | 高 | ✅ 当前代码已无此 bug（测试覆盖确认） |
+| `tests/test_check_agent_dive.py` | 67 | `split_markdown_row`、`check_todo_table`、`load_json`、`check_placeholders`、`parse_projects_index`、`parse_learning_progress`、`check_project`（30+ 分支）、`main()`、`__main__` via runpy |
+| `tests/test_minimal_agent.py` | 21 | agent.py 工具函数、路由逻辑、主循环、subprocess |
+| `tests/test_minimal_agent_sdk.py` | 17 | agent_sdk.py 工具函数、SDK 循环分支（mock client）、main() 错误路径、subprocess |
+| `tests/test_tool_calling_demo.py` | 21 | ToolRegistry 注册/执行/类型强制/错误回传/日志 |
+| **合计** | **126** | |
 
-## 未完成事项及原因
+**覆盖率技术细节**：`sys.exit(main())` 在 `if __name__ == "__main__":` 块中，subprocess 测试无法被 pytest-cov 追踪。通过 `runpy.run_path(str(_SCRIPT), run_name="__main__")` 在进程内执行，实现 100% 覆盖。
 
-| 事项 | 原因 |
-|------|------|
-| gitleaks / secret scanning | 需额外 GitHub Actions 配置，建议独立 PR 引入 |
-| 性能基线（`hyperfine`） | 依赖外部工具安装，当前校验脚本毫秒级完成，不紧迫 |
-| 声明式 schema（JSON Schema） | 重构量大，与现有手写规则有重叠风险，建议独立迭代 |
-| `examples/` 可运行示例 | 需要补充真实代码，超出本次修复范围 |
-| affaan-m__ECC 等 6 个项目骨架残留 | 检查后确认无占位符问题（这些项目的骨架文件用了不同文本，未被检测到） |
+### 4. CI/CD 增强（`.github/workflows/ci.yml`）
+
+| 改进项 | 时间 |
+|--------|------|
+| Python 矩阵：3.11 → 3.10/3.11/3.12 | 第 1 轮 |
+| 新增 pytest + pytest-cov 步骤 | 第 2 轮 |
+| gitleaks secret-scan job（全历史扫描） | 第 3 轮 |
+| 覆盖率 XML artifact 上传（retention 14 天） | 第 4 轮 |
+| Examples smoke test（exit 0 验证） | 第 7 轮 |
+| 覆盖率门槛 95% → 100% | 第 9 轮 |
+
+### 5. 可运行示例
+
+**`examples/minimal-agent/agent.py`**（第 5 轮，无外部依赖）
+- 完整 Agent Loop：用户输入 → 工具选择 → 工具执行 → 上下文积累 → 终止
+- `MAX_STEPS=5` 防无限循环；工具异常捕获；Python 3.10+ 即运行
+- 21 个测试，含 subprocess 端到端验证
+
+**`examples/tool-calling-demo/demo.py`**（第 6 轮，无外部依赖）
+- `ToolRegistry` 完整实现：参数声明（`Param` / `ToolSpec` dataclass）、类型强制转换、必填检查、错误回传（结构化 `{"error": ..., "type": ...}`）、执行日志（含 latency）
+- 21 个测试，覆盖注册/执行/错误/日志全路径
+
+**`examples/minimal-agent/agent_sdk.py`**（第 8 轮，需 `pip install anthropic`）
+- 将 agent.py 的 toy router 替换为 Anthropic SDK tool_use 真实调用
+- `import anthropic` 置于 `main()` 内，模块可在无包时导入（方便 mock 测试）
+- API Key 缺失或包未安装时：`sys.exit(1)` + stderr 清晰提示
+- 17 个测试，全部使用 `MagicMock` client，无需真实 API Key
+
+### 6. 文档与版本库清理
+
+- `CONTRIBUTING.en.md`：修复 `master` → `main` 翻译漂移
+- `.gitignore`：新增 `.tmp-*`、`.coverage`、`coverage.xml`、`htmlcov/`
+- `.tmp-translation-cache.json`（753 KB）：移出 git 跟踪
+
+---
 
 ## 运行方式
 
 ```bash
-# 安装依赖（仅需 pytest）
-pip install pytest
+# 安装测试依赖
+pip install pytest pytest-cov
 
-# 运行单元测试
+# 运行全套测试（含覆盖率检查，门槛 100%）
 python -m pytest tests/ -v
 
-# 运行完整内容校验
+# 运行内容校验脚本
 python scripts/check-agent-dive.py
 
-# 编译检查脚本
+# 编译检查（语法验证）
 python -m compileall scripts
+
+# 运行可运行示例
+python examples/minimal-agent/agent.py "What is 3 + 4?"
+python examples/tool-calling-demo/demo.py
+
+# Anthropic SDK 示例（需安装包和设置 Key）
+pip install anthropic
+export ANTHROPIC_API_KEY=sk-ant-...
+python examples/minimal-agent/agent_sdk.py "What is 12 + 30?"
 ```
+
+---
+
+## 未完成事项
+
+| 事项 | 原因 / 状态 |
+|------|-------------|
+| 声明式 schema（`jsonschema`） | 引入新外部依赖；重构量适中；建议独立 PR |
+| 性能基线（`hyperfine`） | 依赖外部工具；校验脚本毫秒级完成，不紧迫 |
+| Parallel tool call 示例 | `examples/tool-calling-demo/` 的并发调度演示，计划下一轮 |
+| agent_sdk.py 真实 API 集成验证 | 需要真实 `ANTHROPIC_API_KEY`；本地无法自动化 |
+| `examples/` 覆盖率追踪 | 当前 `--cov=scripts` 只追踪 `scripts/`；examples/ 靠 smoke test 保障 |
+| 双语一致性自动校验 | 建议将中英文档字段名一致性纳入 `check-agent-dive.py` |
+
+---
 
 ## 后续建议
 
-1. **gitleaks**：在 CI 中添加 `gitleaks/gitleaks-action` 步骤，对 PR 自动扫描敏感信息。
-2. **性能基线**：在 README 或 `docs/` 中记录 `hyperfine --warmup 3 'python scripts/check-agent-dive.py'` 的基线结果，后续 PR 可对比回归。
-3. **affaan-m__ECC 等 6 个项目**：这些项目的骨架文件内容已不包含被检测模式，但可能有其他占位文本（如 `待填写`），建议人工审查一次。
-4. **测试覆盖率**：可加 `pytest-cov` 并在 CI 中增加覆盖率门槛（建议 ≥70%）。
-5. **双语一致性校验**：建议将"中英双语文档字段名/状态值一致性"纳入自动检测，当前只能靠人工 PR 审查。
+1. **Parallel tool call 示例**：在 `examples/tool-calling-demo/` 展示多工具并发调度，对 AI Agent 工程学习有直接价值
+2. **声明式 schema**：`jsonschema` 替代 `check_project` 中的手写字段校验，提升可维护性
+3. **`examples/` 覆盖率**：将 `--cov` 扩展为 `--cov=scripts --cov=examples`，让 examples 也纳入门槛保障

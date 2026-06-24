@@ -21,6 +21,12 @@
 | P2 | skipped | 性能基线脚本与文档（`hyperfine` / `time`） | `docs/` 或 `scripts/` | 有可重复执行的基线记录 | - | 依赖外部工具 |
 | P2 | skipped | 声明式 schema（JSON Schema / Pydantic）替代部分手写 if | `scripts/`、`schemas/` | schema 验证通过 | - | 重构量大 |
 | P3 | done | 将 `examples/minimal-agent/` 升级为可运行最小 Agent Loop 示例 | `examples/minimal-agent/agent.py`、`README.md`、`README.en.md`、`tests/test_minimal_agent.py` | `python examples/minimal-agent/agent.py` 一次跑通；21 个测试通过 | 2026-06-24 | 无外部依赖，纯 Python |
+| P3 | done | 将 `examples/tool-calling-demo/` 升级为可运行 ToolRegistry 示例（注册、参数校验、错误回传、日志） | `examples/tool-calling-demo/demo.py`、`README.md`、`README.en.md`、`tests/test_tool_calling_demo.py` | `python examples/tool-calling-demo/demo.py` 一次跑通；22 个测试通过 | 2026-06-25 | ToolRegistry + Param schema |
+| P2 | done | 追加 `check-agent-dive.py` subprocess 测试（覆盖 `sys.exit(main())` `__main__` 路径） | `tests/test_check_agent_dive.py` | subprocess 退出 0，stdout 含 "passed" | 2026-06-25 | 108 个测试全通过 |
+| P2 | done | CI 追加 examples smoke test 步骤（`minimal-agent` + `tool-calling-demo`） | `.github/workflows/ci.yml` | 两个脚本 exit 0；CI 中可检测可运行示例被破坏 | 2026-06-25 | 紧跟 Compile scripts 步骤 |
+| P3 | done | `examples/minimal-agent/agent_sdk.py`——Anthropic SDK 接入示例（API Key 缺失 / 包缺失时给出清晰提示） | `examples/minimal-agent/agent_sdk.py`、`tests/test_minimal_agent_sdk.py`、`README.md`、`README.en.md` | 17 个测试全通过，无需真实 API Key；脚本 exit 1 并打印提示 | 2026-06-25 | client 可注入，方便 mock；125 个测试全通过 |
+| P2 | done | `check-agent-dive.py` 覆盖率 99.59% → 100%；CI 门槛升至 100% | `tests/test_check_agent_dive.py`、`pytest.ini`、`.github/workflows/ci.yml` | 126 个测试全通过；覆盖率 100.00%；`--cov-fail-under=100` | 2026-06-25 | `runpy.run_path(..., run_name="__main__")` 在进程内追踪 line 423 |
+| P2 | done | 重写 `OPTIMIZATION_SUMMARY.md`——与 9 轮实际进展对齐（126 测试、100% 覆盖率、3 个可运行示例、CI 全貌） | `OPTIMIZATION_SUMMARY.md` | 数字/命令与 `pytest`/脚本实际输出一致；无宣传性结论 | 2026-06-25 | 原版本停留在第 1 轮（22 测试、无覆盖率） |
 
 ## 跳过原因
 
