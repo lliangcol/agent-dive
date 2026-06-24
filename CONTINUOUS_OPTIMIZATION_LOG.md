@@ -86,3 +86,64 @@
 1. 引入 `pytest-cov` 覆盖率报告上传（Codecov 或 artifacts），使 PR 能直接看到覆盖率变化
 2. 声明式 schema（JSON Schema）替代 `check_project` 中部分手写 if——独立 PR，重构量可控
 3. `affaan-m__ECC` 等 4 个项目人工推进学习进度（当前 0 任务完成）
+
+---
+
+## 第 4 轮（2026-06-24）
+
+**目标**：修复 `.gitignore` 覆盖率文件遗漏 + 为 CI 添加覆盖率 XML artifact 上传（执行第 3 轮建议第 1 条）。
+
+**实际修改**：
+- `.gitignore`：新增 `.coverage`、`coverage.xml`、`htmlcov/` 三条规则，消除每次 `pytest` 后的 git status 噪音
+- `pytest.ini`：`addopts` 加入 `--cov-report=xml:coverage.xml`，使本地和 CI 均自动生成 XML 报告
+- `.github/workflows/ci.yml`：在测试步骤后新增 `actions/upload-artifact@v4` 步骤，每次 CI 运行保留 14 天的 `coverage-py{version}` artifact
+
+**无新测试原因**：CI 配置变更无法用 pytest 单元测试覆盖；pytest.ini 的 addopts 变更通过本地运行验证。
+
+**验证结果**：
+- `python -m pytest tests/ --tb=short`：65 passed，覆盖率 99.59%，`coverage.xml` 正常生成（9.8 KB）
+- `git status`：`.coverage` 和 `coverage.xml` 不再出现（已被 .gitignore 覆盖）
+- CI YAML 语法：三个修改文件已通过本地编辑确认，无语法错误
+
+**未完成**：P2（性能基线、声明式 schema）、P3（可运行示例）、内容工作（4 个项目进度推进）
+
+**下一轮建议**：
+1. 声明式 schema（JSON Schema）替代 `check_project` 中的手写 if 验证——独立 PR，重构量可控
+2. `examples/minimal-agent/` 实现最小可运行 Agent Loop 示例（无外部依赖版：纯 stdin/stdout 交互）
+3. `affaan-m__ECC` 等 4 个项目从第 0 阶段推进：补全 `00-study-plan.md` 和首轮阅读笔记
+
+---
+
+## 第 5 轮（2026-06-24）
+
+**目标**：实现 P3 核心缺口——将 `examples/minimal-agent/` 从 README stub 升级为可运行最小 Agent Loop 示例。
+
+**实际修改**：
+- `examples/minimal-agent/agent.py`（新建，~100 行）：
+  - `TOOLS` 注册表：`add`、`word_count`、`finish` 三个纯函数工具
+  - `model(context)` 函数：玩具路由模型，说明真实 LLM 替换点
+  - `run_agent(question, verbose)` 主循环：`MAX_STEPS=5` 防无限循环，工具异常有捕获
+  - `__main__` 入口：`python agent.py "What is 3 + 4?"` 一行跑通
+- `examples/minimal-agent/README.md`（重写）：含运行示例、核心结构图、替换 LLM 说明
+- `examples/minimal-agent/README.en.md`（重写）：英文版同步
+- `tests/test_minimal_agent.py`（新建，21 个测试）：
+  - 工具单元测试（add/word_count/finish）
+  - model 路由测试（加法/词数/回退/上下文优先级/无数字不路由）
+  - run_agent 集成测试（端到端/verbose 输出/未知工具处理）
+  - subprocess 测试（`__main__` 块，含默认问题）
+
+**修复过程**：初版 `model()` 工具调用后不自动调用 `finish` 导致触达 `MAX_STEPS`；修复为：检查 context 最后一条消息，若为非 finish 工具结果则自动包装 `finish`。
+
+**Windows 兼容**：将 `→` 改为 `->` 防止终端乱码。
+
+**验证结果**：
+- `python -m pytest tests/ -v`：**86 passed**（65 原有 + 21 新增），覆盖率 99.59%
+- `python examples/minimal-agent/agent.py "What is 12 + 8?"`：正常输出，exit 0
+- `python scripts/check-agent-dive.py`：8 projects validated
+
+**未完成**：P2（性能基线、声明式 schema）
+
+**下一轮建议**：
+1. 声明式 schema（JSON Schema）替代 `check_project` 中的手写字段校验——建议独立 PR
+2. `examples/tool-calling-demo/` 添加可运行工具调用示例（展示多工具并发调度模式）
+3. 为 minimal-agent 添加第二个示例：接入 Anthropic SDK（API Key 缺失时 skip 或给出清晰提示）

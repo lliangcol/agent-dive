@@ -17,13 +17,14 @@
 | P1 | done | 补充 parse_projects_index / parse_learning_progress / check_project / main 测试；引入 pytest-cov 门槛 70% | `tests/test_check_agent_dive.py`、`pytest.ini`、`.github/workflows/ci.yml` | 43 个测试全部通过，覆盖率 ≥70% | 2026-06-24 | 37%→89% |
 | P2 | done | 覆盖率从 89% → 99%；门槛升至 95%；新增 `待填写` 检测模式 + 清理 14 个文件 | `tests/test_check_agent_dive.py`、`pytest.ini`、`scripts/check-agent-dive.py`、`learning-notes/` | 65 测试全部通过，覆盖率 ≥95% | 2026-06-24 | 37%→99%，65 个测试 |
 | P2 | done | 添加 gitleaks / secret scanning 到 CI | `.github/workflows/ci.yml` | secret-scan job 存在于 CI | 2026-06-24 | gitleaks-action@v2 |
+| P2 | done | 修复 `.gitignore`（`.coverage`、`coverage.xml`、`htmlcov/`）+ CI 上传覆盖率 XML artifact | `.gitignore`、`pytest.ini`、`.github/workflows/ci.yml` | git status 无噪音；coverage.xml 在 CI artifacts 可见 | 2026-06-24 | upload-artifact@v4 |
 | P2 | skipped | 性能基线脚本与文档（`hyperfine` / `time`） | `docs/` 或 `scripts/` | 有可重复执行的基线记录 | - | 依赖外部工具 |
 | P2 | skipped | 声明式 schema（JSON Schema / Pydantic）替代部分手写 if | `scripts/`、`schemas/` | schema 验证通过 | - | 重构量大 |
-| P3 | skipped | 将 `examples/` 中至少一个规划条目升级为可运行最小样例 | `examples/` | 新手按 README 一次跑通 | - | 需补充真实代码 |
+| P3 | done | 将 `examples/minimal-agent/` 升级为可运行最小 Agent Loop 示例 | `examples/minimal-agent/agent.py`、`README.md`、`README.en.md`、`tests/test_minimal_agent.py` | `python examples/minimal-agent/agent.py` 一次跑通；21 个测试通过 | 2026-06-24 | 无外部依赖，纯 Python |
 
 ## 跳过原因
 
 - **P2 gitleaks**：需要额外 GitHub Actions 配置，当前仓库无真实密钥风险，可在下一 PR 独立引入。
 - **P2 性能基线**：需要 `hyperfine` 工具且结果依赖具体机器；校验脚本当前在毫秒级完成，优先级低。
 - **P2 声明式 schema**：重构量较大，与现有手写规则有重叠风险，建议作为独立 PR。
-- **P3 可运行示例**：需要补充真实代码，超出本次文档+脚本修复范围。
+- **P3 可运行示例**：已完成 `examples/minimal-agent/`，无外部依赖，21 个测试通过。

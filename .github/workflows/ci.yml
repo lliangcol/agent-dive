@@ -44,7 +44,15 @@ jobs:
         run: pip install pytest pytest-cov
 
       - name: Run unit tests with coverage
-        run: python -m pytest tests/ -v --cov=scripts --cov-report=term-missing --cov-fail-under=95
+        run: python -m pytest tests/ -v --cov=scripts --cov-report=term-missing --cov-report=xml:coverage.xml --cov-fail-under=95
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-py${{ matrix.python-version }}
+          path: coverage.xml
+          retention-days: 14
 
       - name: Run repository checks
         run: python scripts/check-agent-dive.py

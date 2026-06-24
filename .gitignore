@@ -34,6 +34,9 @@ __pycache__/
 .mypy_cache/
 .venv/
 venv/
+.coverage
+coverage.xml
+htmlcov/
 
 # 日志与临时文件
 *.log
