@@ -28,6 +28,7 @@
 | P2 | done | `check-agent-dive.py` 覆盖率 99.59% → 100%；CI 门槛升至 100% | `tests/test_check_agent_dive.py`、`pytest.ini`、`.github/workflows/ci.yml` | 126 个测试全通过；覆盖率 100.00%；`--cov-fail-under=100` | 2026-06-25 | `runpy.run_path(..., run_name="__main__")` 在进程内追踪 line 423 |
 | P2 | done | 重写 `OPTIMIZATION_SUMMARY.md`——与 9 轮实际进展对齐（126 测试、100% 覆盖率、3 个可运行示例、CI 全貌） | `OPTIMIZATION_SUMMARY.md` | 数字/命令与 `pytest`/脚本实际输出一致；无宣传性结论 | 2026-06-25 | 原版本停留在第 1 轮（22 测试、无覆盖率） |
 | P2 | done | 新增 `parallel_demo.py`（并发工具调度示例）+ 将 `examples/` 纳入覆盖率保障（`--cov=examples`）+ 152 个测试全通过，覆盖率 100% | `examples/tool-calling-demo/parallel_demo.py`、`tests/test_parallel_demo.py`、`pytest.ini`、`.github/workflows/ci.yml`、各测试文件 | 152 个测试全通过；`examples/` 所有 Python 文件覆盖率 100% | 2026-06-25 | 17 个新测试（parallel_demo）+ 各示例 __main__/main() 补丁 |
+| P3 | done | 将 `examples/rag-agent-demo/` 从 stub 升级为可运行 RAG 示例（纯 Python bag-of-words cosine sim，无外部依赖） | `examples/rag-agent-demo/rag.py`、`tests/test_rag_demo.py`、`.github/workflows/ci.yml`、`OPTIMIZATION_SUMMARY.md` | 193 个测试全通过；6 个文件覆盖率 100%（531 语句） | 2026-06-25 | 41 个新测试；tokenize/cosine_sim/retrieve/generate 全路径覆盖 |
 
 ## 跳过原因
 

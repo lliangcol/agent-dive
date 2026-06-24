@@ -353,3 +353,44 @@
 1. 声明式 schema（`jsonschema`）替代 `check_project` 手写字段校验——独立 PR，重构量适中
 2. `examples/rag-agent-demo/` 实现最小可运行示例（本地向量搜索，无外部服务依赖，如 `faiss-cpu` 或纯 Python cosine sim）
 3. `OPTIMIZATION_SUMMARY.md` 追加第 11 轮数字（152 测试、5 文件 100% 覆盖率、4 个可运行示例）
+
+---
+
+## 第 12 轮（2026-06-25）
+
+**目标**：将 `examples/rag-agent-demo/` 从 README stub 升级为可运行最小 RAG 示例。
+
+**实际修改**：
+- `examples/rag-agent-demo/rag.py`（新建，~200 行）：
+  - `tokenize(text)`：小写 + 非字母数字切分 + 停用词过滤，返回 `Counter`
+  - `cosine_sim(a, b)`：纯 `math.sqrt` 实现余弦相似度，含零范数防御（line 80）
+  - `embed_corpus(chunks)`：预计算所有 chunk 的 token 向量
+  - `retrieve(query, embedded, *, top_k)`：按余弦相似度排序返回 top-k
+  - `generate(question, results)`：格式化最优命中 + 上下文列表；注释标注真实 LLM 替换点
+  - `DEFAULT_CHUNKS`：6 个 AI Agent 主题语料块（Agent/RAG/工具调用/记忆/规划/嵌入）
+  - `run_rag(question, chunks, *, top_k, verbose)`：完整管道入口
+  - `main()` + `__main__` 入口
+- `tests/test_rag_demo.py`（新建，41 个测试）：
+  - tokenize：大小写/停用词/空串/标点/频次计数
+  - cosine_sim：相同向量=1、正交=0、部分重叠、空向量、零范数、对称性
+  - embed_corpus：返回类型/顺序
+  - retrieve：top-k 数量/降序排列/最优命中/空语料/top_k > 语料大小
+  - generate：无结果/零分/含 source/含文本/零分排除
+  - DEFAULT_CHUNKS 完整性校验（非空/字段存在/id 唯一）
+  - run_rag 端到端（自定义语料/无匹配/verbose/top_k 约束）
+  - main() + capsys argv + subprocess + runpy `__main__`
+- `.github/workflows/ci.yml`：smoke test 新增 `python examples/rag-agent-demo/rag.py "What is an AI agent?"`
+- `OPTIMIZATION_SUMMARY.md`：更新至第 12 轮（193 测试、531 语句、6 文件 100%、5 个可运行示例）
+- `IMPLEMENTATION_PLAN.md`：追加本轮条目
+
+**验证结果**：
+- `python examples/rag-agent-demo/rag.py "What is an AI agent?"`：exit 0，命中 "AI Agents Overview"（score 0.28）
+- `python -m pytest tests/ -q`：**193 passed**，覆盖率 **100.00%**（531 语句，6 文件）
+- `python scripts/check-agent-dive.py`：8 projects validated
+
+**未完成**：P2（声明式 schema）
+
+**下一轮建议**：
+1. 声明式 schema（`jsonschema`）替代 `check_project` 手写字段校验——独立 PR，重构量适中
+2. 双语一致性校验：将中英文档关键字段一致性纳入 `check-agent-dive.py`，防止翻译漂移重现
+3. `examples/mcp-demo/` 实现最小可运行 MCP 示例（只读工具，纯 Python，明确 schema）
