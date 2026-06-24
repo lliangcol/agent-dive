@@ -11,6 +11,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 
+
+def _rel(path: Path) -> str:
+    """Return path relative to ROOT, or the full path when outside ROOT."""
+    try:
+        return str(path.relative_to(ROOT))
+    except ValueError:
+        return str(path)
+
 PROJECT_REQUIRED_FILES = [
     "README.md",
     "project-analysis.md",
@@ -98,8 +106,13 @@ VERIFICATION_ALLOWED_BY_FIELD = {
 
 
 def load_json(path: Path) -> dict:
-    with path.open("r", encoding="utf-8") as handle:
-        return json.load(handle)
+    try:
+        with path.open("r", encoding="utf-8") as handle:
+            return json.load(handle)
+    except json.JSONDecodeError as exc:
+        raise ValueError(
+            f"{_rel(path)}:{exc.lineno}:{exc.colno}: invalid JSON: {exc.msg}"
+        ) from exc
 
 
 def parse_projects_index() -> list[dict]:
@@ -214,16 +227,16 @@ def check_todo_table(path: Path) -> list[str]:
         cells = split_markdown_row(line)
         if len(cells) != 10:
             errors.append(
-                f"{path.relative_to(ROOT)}:{line_number}: expected 10 task columns, got {len(cells)}"
+                f"{_rel(path)}:{line_number}: expected 10 task columns, got {len(cells)}"
             )
             continue
         if cells[0] not in {"[ ]", "[x]", "[X]"}:
-            errors.append(f"{path.relative_to(ROOT)}:{line_number}: invalid task state {cells[0]!r}")
+            errors.append(f"{_rel(path)}:{line_number}: invalid task state {cells[0]!r}")
         task_id = cells[1].strip("`")
         if not re.match(r"^[A-Z0-9]+-L[1-6]-\d{2}$", task_id):
-            errors.append(f"{path.relative_to(ROOT)}:{line_number}: invalid task_id {task_id!r}")
+            errors.append(f"{_rel(path)}:{line_number}: invalid task_id {task_id!r}")
         if task_id in seen_task_ids:
-            errors.append(f"{path.relative_to(ROOT)}:{line_number}: duplicate task_id {task_id!r}")
+            errors.append(f"{_rel(path)}:{line_number}: duplicate task_id {task_id!r}")
         seen_task_ids.add(task_id)
     return errors
 
@@ -349,6 +362,15 @@ def check_placeholders() -> list[str]:
         "Evidence file:",
         "Next step: follow the first open task",
         "Pending.",
+        # English residues from automated skeleton generation
+        "To be replenished.",
+        "completed note skeleton during closed-loop transfer of learning",
+        "Next step: press the first unfinished task in learning-todo-list.md to advance",
+        # PowerShell hashtable artifact that appears when variable substitution fails
+        "$(System.Collections.Hashtable",
+        # Chinese residues
+        "待补。",
+        "学习闭环迁移时补齐的笔记骨架",
     ]
     project_docs = [
         path

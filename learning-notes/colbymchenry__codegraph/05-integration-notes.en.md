@@ -1,11 +1,15 @@
-# CodeGraph integration notes
+# CodeGraph Integration Notes
 
-## Current status
+## Current Status
 
-- Status: completed note skeleton during closed-loop transfer of learning.
-- evidence file: $(System.Collections.Hashtable.Evidence).
-- Next step: press the first unfinished task in learning-todo-list.md to advance.
+- Status: note skeleton — integration study tasks not yet started.
+- Evidence: projects/mcp-tools/colbymchenry__codegraph/evidence.md
+- Next step: work through the first open task in learning-todo-list.md.
+
+## Integration Setup
+
+*(Integration notes not yet collected — complete Level 3–4 tasks in learning-todo-list.md first.)*
 
 ## Notes
 
-To be replenished.
+*(Content pending — to be filled in during the integration study phase.)*

@@ -6,7 +6,7 @@ Welcome to contribute project deep dives, templates, diagrams, learning routes a
 
 - Read [README.md](README.en.md), [USAGE.md](USAGE.en.md) and [START_HERE.md](START_HERE.en.md) to confirm repository location and current status.
 - Get to know [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.en.md), [SECURITY.md](SECURITY.en.md) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.en.md).
-- Create a topic branch from `main` and do not submit work directly on the master branch.
+- Create a topic branch from `main` and do not push directly to the `main` branch.
 
 ## Basic principles
 

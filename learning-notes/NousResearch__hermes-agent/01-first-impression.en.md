@@ -1,11 +1,11 @@
 # HermesAgent First Impressions
 
-## Current status
+## Current Status
 
-- Status: completed note skeleton during closed-loop transfer of learning.
-- evidence file: $(System.Collections.Hashtable.Evidence).
-- Next step: press the first unfinished task in learning-todo-list.md to advance.
+- Status: note skeleton — content pending.
+- Evidence: see evidence.md in the project directory.
+- Next step: work through the first open task in learning-todo-list.md.
 
 ## Notes
 
-To be replenished.
+*(Content pending — to be filled in during the study phase.)*

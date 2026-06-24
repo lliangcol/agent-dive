@@ -40,6 +40,7 @@ venv/
 logs/
 tmp/
 temp/
+.tmp-*
 
 # AgentDive 本地缓存
 .cache/
