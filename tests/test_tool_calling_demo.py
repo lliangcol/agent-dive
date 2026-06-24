@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import runpy
 import subprocess
 import sys
 from pathlib import Path
@@ -201,7 +202,24 @@ def test_validate_required_param_missing_raises():
 
 
 # ---------------------------------------------------------------------------
-# __main__ subprocess
+# main() entry point
+# ---------------------------------------------------------------------------
+
+def test_main_returns_zero():
+    assert _mod.main() == 0
+
+
+def test_main_output(capsys):
+    _mod.main()
+    captured = capsys.readouterr()
+    assert "Registered tools:" in captured.out
+    assert "calls logged" in captured.out
+    assert "[ok ]" in captured.out
+    assert "[err]" in captured.out
+
+
+# ---------------------------------------------------------------------------
+# __main__ subprocess + runpy
 # ---------------------------------------------------------------------------
 
 def test_runs_as_script():
@@ -215,3 +233,10 @@ def test_runs_as_script():
     assert "calls logged" in result.stdout
     assert "[ok ]" in result.stdout
     assert "[err]" in result.stdout
+
+
+def test_main_block_via_runpy():
+    """Cover sys.exit(main()) on line 188 using runpy in-process."""
+    with pytest.raises(SystemExit) as exc:
+        runpy.run_path(str(_DEMO), run_name="__main__")
+    assert exc.value.code == 0

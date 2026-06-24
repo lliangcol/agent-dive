@@ -1,20 +1,21 @@
 # AgentDive 优化总结
 
-基于 `deep-research-report.md` 历经 9 轮持续改进的真实记录。  
+基于 `deep-research-report.md` 历经 11 轮持续改进的真实记录。  
 详细过程见 `CONTINUOUS_OPTIMIZATION_LOG.md`，任务跟踪见 `IMPLEMENTATION_PLAN.md`。
 
 ---
 
-## 当前状态（2026-06-25，第 9 轮）
+## 当前状态（2026-06-25，第 11 轮）
 
 | 指标 | 值 |
 |------|-----|
-| 测试数量 | **126 个**（从 0 开始） |
-| 代码覆盖率 | **100%**（`scripts/check-agent-dive.py`，246 语句） |
+| 测试数量 | **152 个**（从 0 开始） |
+| 代码覆盖率 | **100%**（5 个文件：`scripts/check-agent-dive.py` + 4 个 examples Python 文件，共 469 语句） |
+| 覆盖率范围 | `--cov=scripts --cov=examples`（第 11 轮扩展） |
 | 覆盖率门槛（pytest + CI） | 100%（分阶段：0% → 70% → 95% → 100%） |
 | CI 矩阵 | Python 3.10 / 3.11 / 3.12，3 并行 job |
 | 安全扫描 | gitleaks（全历史 fetch-depth: 0） |
-| 可运行示例 | 3 个（无外部依赖、ToolRegistry、Anthropic SDK 接入） |
+| 可运行示例 | 4 个（无外部依赖 Agent Loop、ToolRegistry、并发调度、Anthropic SDK 接入） |
 | 项目校验通过 | 8 个（`python scripts/check-agent-dive.py`) |
 
 ---
@@ -43,12 +44,13 @@
 | 测试文件 | 测试数 | 覆盖内容 |
 |----------|--------|----------|
 | `tests/test_check_agent_dive.py` | 67 | `split_markdown_row`、`check_todo_table`、`load_json`、`check_placeholders`、`parse_projects_index`、`parse_learning_progress`、`check_project`（30+ 分支）、`main()`、`__main__` via runpy |
-| `tests/test_minimal_agent.py` | 21 | agent.py 工具函数、路由逻辑、主循环、subprocess |
-| `tests/test_minimal_agent_sdk.py` | 17 | agent_sdk.py 工具函数、SDK 循环分支（mock client）、main() 错误路径、subprocess |
-| `tests/test_tool_calling_demo.py` | 21 | ToolRegistry 注册/执行/类型强制/错误回传/日志 |
-| **合计** | **126** | |
+| `tests/test_minimal_agent.py` | 23 | agent.py 工具函数、路由逻辑、主循环、工具异常捕获、subprocess、runpy `__main__` |
+| `tests/test_minimal_agent_sdk.py` | 20 | agent_sdk.py 工具函数、SDK 循环分支（mock client）、非 tool_use 块跳过、main() 错误路径 + 成功路径、runpy `__main__` |
+| `tests/test_tool_calling_demo.py` | 24 | ToolRegistry 注册/执行/类型强制/错误回传/日志、main() 直接调用、runpy `__main__` |
+| `tests/test_parallel_demo.py` | 18 | dispatch_parallel 顺序保证/错误回传/边界、日志集成、main()、runpy `__main__` |
+| **合计** | **152** | |
 
-**覆盖率技术细节**：`sys.exit(main())` 在 `if __name__ == "__main__":` 块中，subprocess 测试无法被 pytest-cov 追踪。通过 `runpy.run_path(str(_SCRIPT), run_name="__main__")` 在进程内执行，实现 100% 覆盖。
+**覆盖率技术细节**：`sys.exit(main())` 在 `if __name__ == "__main__":` 块中，subprocess 测试无法被 pytest-cov 追踪。通过 `runpy.run_path(str(_SCRIPT), run_name="__main__")` 在进程内执行，实现 100% 覆盖。agent.py 的 `__main__` 块不调用 `sys.exit()`，直接用 runpy + capsys 断言输出。
 
 ### 4. CI/CD 增强（`.github/workflows/ci.yml`）
 
@@ -60,6 +62,7 @@
 | 覆盖率 XML artifact 上传（retention 14 天） | 第 4 轮 |
 | Examples smoke test（exit 0 验证） | 第 7 轮 |
 | 覆盖率门槛 95% → 100% | 第 9 轮 |
+| `--cov=examples` 扩展 + `parallel_demo.py` smoke test | 第 11 轮 |
 
 ### 5. 可运行示例
 
@@ -76,7 +79,13 @@
 - 将 agent.py 的 toy router 替换为 Anthropic SDK tool_use 真实调用
 - `import anthropic` 置于 `main()` 内，模块可在无包时导入（方便 mock 测试）
 - API Key 缺失或包未安装时：`sys.exit(1)` + stderr 清晰提示
-- 17 个测试，全部使用 `MagicMock` client，无需真实 API Key
+- 20 个测试，全部使用 `MagicMock` client，无需真实 API Key
+
+**`examples/tool-calling-demo/parallel_demo.py`**（第 11 轮，无外部依赖）
+- 演示 "parallel tool use" 模式：LLM 在单次响应中返回多个工具调用，`ThreadPoolExecutor` 并发执行
+- `dispatch_parallel(registry, calls, *, max_workers)` 通过 `as_completed` 收集结果并按原始索引排序回传
+- 从 `demo.py` 动态导入 `ToolRegistry`（`importlib.util`），无需 package 安装
+- 18 个测试，覆盖顺序保证、错误回传、边界条件、日志集成、runpy `__main__`
 
 ### 6. 文档与版本库清理
 
@@ -104,6 +113,7 @@ python -m compileall scripts
 # 运行可运行示例
 python examples/minimal-agent/agent.py "What is 3 + 4?"
 python examples/tool-calling-demo/demo.py
+python examples/tool-calling-demo/parallel_demo.py
 
 # Anthropic SDK 示例（需安装包和设置 Key）
 pip install anthropic
@@ -119,15 +129,14 @@ python examples/minimal-agent/agent_sdk.py "What is 12 + 30?"
 |------|-------------|
 | 声明式 schema（`jsonschema`） | 引入新外部依赖；重构量适中；建议独立 PR |
 | 性能基线（`hyperfine`） | 依赖外部工具；校验脚本毫秒级完成，不紧迫 |
-| Parallel tool call 示例 | `examples/tool-calling-demo/` 的并发调度演示，计划下一轮 |
 | agent_sdk.py 真实 API 集成验证 | 需要真实 `ANTHROPIC_API_KEY`；本地无法自动化 |
-| `examples/` 覆盖率追踪 | 当前 `--cov=scripts` 只追踪 `scripts/`；examples/ 靠 smoke test 保障 |
+| `examples/rag-agent-demo/` 可运行实现 | 当前为 README stub；需本地向量检索能力 |
 | 双语一致性自动校验 | 建议将中英文档字段名一致性纳入 `check-agent-dive.py` |
 
 ---
 
 ## 后续建议
 
-1. **Parallel tool call 示例**：在 `examples/tool-calling-demo/` 展示多工具并发调度，对 AI Agent 工程学习有直接价值
-2. **声明式 schema**：`jsonschema` 替代 `check_project` 中的手写字段校验，提升可维护性
-3. **`examples/` 覆盖率**：将 `--cov` 扩展为 `--cov=scripts --cov=examples`，让 examples 也纳入门槛保障
+1. **声明式 schema**：`jsonschema` 替代 `check_project` 中的手写字段校验，提升可维护性；建议独立 PR
+2. **`examples/rag-agent-demo/`**：实现最小可运行 RAG 示例（纯 Python cosine sim，无外部服务依赖）
+3. **双语一致性校验**：将中英文档关键字段一致性纳入 `check-agent-dive.py`，防止翻译漂移重现

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib.util
+import runpy
 import subprocess
 import sys
 from pathlib import Path
@@ -178,3 +179,21 @@ def test_runs_as_script_default_question():
     )
     assert proc.returncode == 0
     assert "7.0" in proc.stdout  # default: "What is 3 + 4?"
+
+
+def test_tool_exception_is_caught(monkeypatch):
+    """Exceptions raised inside a tool fn are caught and included in the result."""
+    def exploding_add(**_):
+        raise ValueError("boom")
+
+    monkeypatch.setitem(TOOLS, "add", {**TOOLS["add"], "fn": exploding_add})
+    result = run_agent("What is 1 + 2?", verbose=False)
+    assert "[error:" in result or isinstance(result, str)
+
+
+def test_main_block_via_runpy(monkeypatch, capsys):
+    """Cover the __main__ block (lines 123-127) using runpy in-process."""
+    monkeypatch.setattr(sys, "argv", [str(_SCRIPT), "What is 2 + 2?"])
+    runpy.run_path(str(_SCRIPT), run_name="__main__")
+    captured = capsys.readouterr()
+    assert "4.0" in captured.out

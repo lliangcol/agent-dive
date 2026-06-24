@@ -27,6 +27,7 @@
 | P3 | done | `examples/minimal-agent/agent_sdk.py`——Anthropic SDK 接入示例（API Key 缺失 / 包缺失时给出清晰提示） | `examples/minimal-agent/agent_sdk.py`、`tests/test_minimal_agent_sdk.py`、`README.md`、`README.en.md` | 17 个测试全通过，无需真实 API Key；脚本 exit 1 并打印提示 | 2026-06-25 | client 可注入，方便 mock；125 个测试全通过 |
 | P2 | done | `check-agent-dive.py` 覆盖率 99.59% → 100%；CI 门槛升至 100% | `tests/test_check_agent_dive.py`、`pytest.ini`、`.github/workflows/ci.yml` | 126 个测试全通过；覆盖率 100.00%；`--cov-fail-under=100` | 2026-06-25 | `runpy.run_path(..., run_name="__main__")` 在进程内追踪 line 423 |
 | P2 | done | 重写 `OPTIMIZATION_SUMMARY.md`——与 9 轮实际进展对齐（126 测试、100% 覆盖率、3 个可运行示例、CI 全貌） | `OPTIMIZATION_SUMMARY.md` | 数字/命令与 `pytest`/脚本实际输出一致；无宣传性结论 | 2026-06-25 | 原版本停留在第 1 轮（22 测试、无覆盖率） |
+| P2 | done | 新增 `parallel_demo.py`（并发工具调度示例）+ 将 `examples/` 纳入覆盖率保障（`--cov=examples`）+ 152 个测试全通过，覆盖率 100% | `examples/tool-calling-demo/parallel_demo.py`、`tests/test_parallel_demo.py`、`pytest.ini`、`.github/workflows/ci.yml`、各测试文件 | 152 个测试全通过；`examples/` 所有 Python 文件覆盖率 100% | 2026-06-25 | 17 个新测试（parallel_demo）+ 各示例 __main__/main() 补丁 |
 
 ## 跳过原因
 

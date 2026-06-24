@@ -316,3 +316,40 @@
 1. `examples/tool-calling-demo/` 新增 parallel tool call 示例（展示多工具并发调度，纯 Python，无新依赖）
 2. 声明式 schema：`jsonschema` 替代 `check_project` 手写字段校验
 3. `--cov` 扩展为 `--cov=scripts --cov=examples`，将 examples 也纳入覆盖率保障
+
+---
+
+## 第 11 轮（2026-06-25）
+
+**目标**：执行第 10 轮建议第 1 条 + 第 3 条——新增 `parallel_demo.py` 并发工具调度示例，同时将 `examples/` 纳入覆盖率保障，形成一个完整闭环。
+
+**实际修改**：
+- `examples/tool-calling-demo/parallel_demo.py`（新建，~105 行）：
+  - 从 `demo.py` 动态导入 `ToolRegistry`（`importlib.util`，无 package 安装要求）
+  - `dispatch_parallel(registry, calls, *, max_workers)`：`ThreadPoolExecutor` 并发执行，`as_completed` 收集结果，按原始索引排序回传
+  - `main()`：4 个工具调用并发演示，打印结果和耗时
+  - `__main__` 入口：`python examples/tool-calling-demo/parallel_demo.py` 一行跑通
+- `tests/test_parallel_demo.py`（新建，18 个测试）：
+  - 顺序保证（20 项乱序并发后验证每个结果值）
+  - 错误回传（未知工具、类型错误、混合 ok/error）
+  - 日志集成（dispatch 后 registry.log() 数量正确）
+  - 边界（空 batch、单 call、max_workers=1）
+  - `main()` 返回 0；subprocess 端到端；runpy `__main__` 覆盖 line 101
+- `pytest.ini`：`--cov=scripts --cov=examples`（新增 `--cov=examples`）
+- `.github/workflows/ci.yml`：测试命令同步增加 `--cov=examples`；smoke test 新增 `parallel_demo.py`
+- 各示例测试文件补丁（共 +26 个测试）：
+  - `tests/test_minimal_agent.py`：`test_tool_exception_is_caught`（line 105-106）+ `test_main_block_via_runpy`（line 124-127，runpy 不抛 SystemExit）
+  - `tests/test_minimal_agent_sdk.py`：`test_non_tool_use_block_skipped`（line 117）+ `test_main_successful_path`（line 174-178）+ `test_main_block_via_runpy`（line 182）
+  - `tests/test_tool_calling_demo.py`：`test_main_returns_zero`（line 165-184）+ `test_main_output`（capsys）+ `test_main_block_via_runpy`（line 188）
+
+**验证结果**：
+- `python examples/tool-calling-demo/parallel_demo.py`：exit 0，4 个 `[ok ]` 输出
+- `python -m pytest tests/ -q`：**152 passed**，覆盖率 **100.00%**（5 个文件：`scripts/check-agent-dive.py` + 4 个 examples Python 文件）
+- `python scripts/check-agent-dive.py`：8 projects validated
+
+**未完成**：P2（声明式 schema）
+
+**下一轮建议**：
+1. 声明式 schema（`jsonschema`）替代 `check_project` 手写字段校验——独立 PR，重构量适中
+2. `examples/rag-agent-demo/` 实现最小可运行示例（本地向量搜索，无外部服务依赖，如 `faiss-cpu` 或纯 Python cosine sim）
+3. `OPTIMIZATION_SUMMARY.md` 追加第 11 轮数字（152 测试、5 文件 100% 覆盖率、4 个可运行示例）

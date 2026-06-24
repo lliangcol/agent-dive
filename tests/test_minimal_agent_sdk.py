@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import importlib.util
 import os
+import runpy
 import subprocess
 import sys
 from pathlib import Path
@@ -212,6 +213,50 @@ def test_main_exits_1_when_api_key_missing(monkeypatch):
     with patch.dict(sys.modules, {"anthropic": mock_anthropic}):
         with pytest.raises(SystemExit) as exc:
             _mod.main()
+    assert exc.value.code == 1
+
+
+def test_non_tool_use_block_skipped():
+    """Blocks with type != 'tool_use' are skipped via 'continue' (line 117)."""
+    # Build a response with stop_reason=tool_use but first block is type "text"
+    text_block = MagicMock()
+    text_block.type = "text"
+    text_block.text = "intermediate text"
+
+    tool_block = MagicMock()
+    tool_block.type = "tool_use"
+    tool_block.name = "add"
+    tool_block.input = {"a": 1.0, "b": 2.0}
+    tool_block.id = "tu-skip"
+
+    resp1 = MagicMock()
+    resp1.stop_reason = "tool_use"
+    resp1.content = [text_block, tool_block]   # text_block triggers continue
+
+    result = run_agent_sdk("?", _client(resp1, _end_turn("3.0")), verbose=False)
+    assert result == "3.0"
+
+
+def test_main_successful_path(monkeypatch):
+    """Cover main() lines 174-178: client creation and agent invocation."""
+    mock_anthropic = MagicMock()
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "sk-test-key")
+    monkeypatch.setattr(sys, "argv", ["agent_sdk.py"])
+    monkeypatch.setattr(_mod, "run_agent_sdk", lambda q, client, **kw: "42")
+
+    with patch.dict(sys.modules, {"anthropic": mock_anthropic}):
+        _mod.main()   # must not raise; returns None
+
+
+def test_main_block_via_runpy():
+    """Cover __main__ block (line 182) using runpy in-process."""
+    env = {k: v for k, v in os.environ.items() if k != "ANTHROPIC_API_KEY"}
+    env.pop("ANTHROPIC_API_KEY", None)
+
+    # runpy sets __name__="__main__"; main() will exit(1) due to missing key
+    with patch.dict(os.environ, {"ANTHROPIC_API_KEY": ""}, clear=False):
+        with pytest.raises(SystemExit) as exc:
+            runpy.run_path(str(_SCRIPT), run_name="__main__")
     assert exc.value.code == 1
 
 
