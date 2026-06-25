@@ -13,6 +13,7 @@
 | Caveman | https://github.com/JuliusBrussee/caveman | agentic-coding | Level B | analyzing | 否 | 部分 | 部分 | 是 | 2026-06-11 |
 | RTK | https://github.com/rtk-ai/rtk | agentic-coding | Level B | analyzing | 否 | 部分 | 部分 | 是 | 2026-06-11 |
 | Claude HUD | https://github.com/jarrodwatts/claude-hud | agentic-coding | Level B | analyzing | 否 | 部分 | 部分 | 是 | 2026-06-11 |
+| Ponytail | https://github.com/DietrichGebert/ponytail | agentic-coding | Level B | analyzing | 否 | 部分 | 部分 | 是 | 2026-06-25 |
 | CodeGraph | https://github.com/colbymchenry/codegraph | mcp-tools | Level A | analyzing | 是 | 部分 | 是 | 是 | 2026-06-11 |
 
 ## 字段说明

@@ -1,0 +1,17 @@
+flowchart TD
+  user["User / coding task"] --> host["AI coding host"]
+  host --> adapter["Host adapter"]
+  adapter --> hooks["Lifecycle hooks"]
+  adapter --> commands["Commands and skills"]
+  hooks --> config["Mode config resolver"]
+  hooks --> builder["Instruction builder"]
+  commands --> skills["skills/*.md"]
+  config --> state[".ponytail-active"]
+  builder --> skills
+  builder --> prompt["Injected system context"]
+  prompt --> agent["Agent response"]
+  skills --> agent
+  agent --> code["Smaller correct diff"]
+  tests["tests and benchmark gates"] --> hooks
+  tests --> adapter
+  tests --> skills

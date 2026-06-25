@@ -1,0 +1,72 @@
+{
+  "project_id": "DietrichGebert__ponytail",
+  "name": "Ponytail",
+  "github_url": "https://github.com/DietrichGebert/ponytail",
+  "homepage": "https://github.com/DietrichGebert/ponytail",
+  "category": "agentic-coding",
+  "collect_level": "Level B",
+  "status": "analyzing",
+  "license": "MIT",
+  "primary_language": "JavaScript",
+  "default_branch": "main",
+  "collected_at": "2026-06-25",
+  "github_snapshot": {
+    "stars": 56052,
+    "forks": 2833,
+    "open_issues_count": 71,
+    "pushed_at": "2026-06-24T13:37:06Z",
+    "updated_at": "2026-06-25T06:36:25Z",
+    "source": "GitHub REST API, git ls-remote, raw files, and temporary shallow clone"
+  },
+  "source_snapshot": {
+    "commit": "a945778b4a73b0b78c3c781a594b62cd3a324637",
+    "snapshot_date": "2026-06-25",
+    "source_cache_path": ".cache/sources/DietrichGebert__ponytail",
+    "source_status": "temporary_shallow_snapshot_checked"
+  },
+  "release_snapshot": {
+    "latest_release": "v4.8.3",
+    "published_at": "2026-06-24T02:38:23Z",
+    "release_name": "v4.8.3: lazy in subagents too",
+    "package_json_version": "4.8.3",
+    "plugin_manifest_version": "4.8.3"
+  },
+  "verification": {
+    "runtime_status": "not_run",
+    "tests_status": "pass",
+    "source_review_status": "partial",
+    "diagram_status": "draft",
+    "learning_notes_status": "created"
+  },
+  "evidence": {
+    "evidence_file": "projects/agentic-coding/DietrichGebert__ponytail/evidence.md",
+    "last_verified_at": "2026-06-25"
+  },
+  "tags": [
+    "agentic-coding",
+    "codex-plugin",
+    "claude-code-plugin",
+    "copilot-cli-plugin",
+    "gemini-extension",
+    "opencode-plugin",
+    "pi-extension",
+    "openclaw-skill",
+    "agent-portability",
+    "yagni",
+    "code-simplification",
+    "lifecycle-hooks",
+    "prompt-benchmarks",
+    "subagent-hooks"
+  ],
+  "suitable_for": [
+    "AI 编码 Agent 规则集和技能分发学习",
+    "多宿主插件适配和生命周期 hook 设计学习",
+    "过度工程审查、最小实现策略和 benchmark 复现实验"
+  ],
+  "not_suitable_for": [
+    "把 README benchmark 当作跨模型、跨会话成本承诺",
+    "替代正常的安全、正确性、可访问性和边界验证",
+    "未经隔离直接在主力 Codex 或 Claude Code 配置中信任生命周期 hooks"
+  ],
+  "maintainer_notes": "Latest snapshot refresh. GitHub API, README, AGENTS.md, adapter portability docs, plugin manifests, hooks, skills, commands, benchmarks, examples, workflow, and tests were checked through a temporary shallow clone at v4.8.3. Full npm test passed after using a temporary venv with pandas and a venv-local python3 shim because the upstream correctness harness probes python3 before python on Windows. Real host install, hook trust, SubagentStart host behavior, and promptfoo API benchmark remain not_run."
+}

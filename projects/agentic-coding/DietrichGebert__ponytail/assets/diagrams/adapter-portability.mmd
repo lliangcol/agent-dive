@@ -1,0 +1,18 @@
+flowchart LR
+  core["Core rule sources"]
+  core --> agents["AGENTS.md"]
+  core --> skill["skills/ponytail/SKILL.md"]
+  skill --> codex["Codex plugin"]
+  skill --> claude["Claude Code plugin"]
+  skill --> copilot["Copilot CLI plugin"]
+  skill --> pi["Pi extension"]
+  skill --> opencode["OpenCode plugin"]
+  skill --> gemini["Gemini extension"]
+  skill --> openclaw["OpenClaw skills"]
+  agents --> cursor["Cursor rules"]
+  agents --> windsurf["Windsurf rules"]
+  agents --> cline["Cline rules"]
+  agents --> kiro["Kiro steering"]
+  agents --> generic["Generic agents"]
+  scripts["sync checks"] --> agents
+  scripts --> skill

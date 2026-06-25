@@ -1,0 +1,23 @@
+{
+  "project_id": "DietrichGebert__ponytail",
+  "project_name": "Ponytail",
+  "github_url": "https://github.com/DietrichGebert/ponytail",
+  "status": "not_started",
+  "current_stage": "analyzing",
+  "completed_tasks": 6,
+  "total_tasks": 32,
+  "last_studied_at": "2026-06-25",
+  "blocked_items": [
+    "Real Codex or Claude Code plugin install is not verified",
+    "Promptfoo API benchmark has not been reproduced locally",
+    "SubagentStart hook has not been verified in a real Codex or Claude Code host"
+  ],
+  "next_actions": [
+    "Run a Codex plugin smoke test in an isolated profile",
+    "Verify hook outputs, SubagentStart injection, and mode persistence before marking runtime pass",
+    "Reproduce a small promptfoo API benchmark only with explicit API budget"
+  ],
+  "evidence_file": "projects/agentic-coding/DietrichGebert__ponytail/evidence.md",
+  "review_questions_done": false,
+  "final_summary_done": false
+}

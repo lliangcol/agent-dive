@@ -1,0 +1,21 @@
+flowchart TD
+  start["SessionStart event"] --> hookjson["hooks/claude-codex-hooks.json"]
+  substart["SubagentStart event"] --> hookjson
+  hookjson --> nodecheck["Node available"]
+  nodecheck -->|yes| activate["ponytail-activate.js"]
+  nodecheck -->|yes| subagent["ponytail-subagent.js"]
+  nodecheck -->|no| quiet["Exit without noisy failure"]
+  activate --> mode["getDefaultMode"]
+  subagent --> mode
+  mode --> offcheck{"mode is off"}
+  offcheck -->|yes| clear["clear .ponytail-active"]
+  offcheck -->|yes| silent["subagent stays silent"]
+  offcheck -->|no| write["write .ponytail-active"]
+  offcheck -->|no| subbuild["subagent builds context"]
+  write --> build["getPonytailInstructions"]
+  subbuild --> build
+  build --> skill["read skills/ponytail/SKILL.md"]
+  build --> output["writeHookOutput"]
+  output --> codex["Codex JSON payload"]
+  output --> copilot["Copilot additionalContext"]
+  output --> claude["Claude text context"]
